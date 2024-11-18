@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using static SmartHome.Commons.ApplicationConstants
+@{
+    int currentY = DateTime.UtcNow.Year;
+    string footerNote = (ReleaseYear == currentY) ? $"{currentY}" : $"{ReleaseYear} - {currentY}";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,7 +40,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - SmartHomeManagmentSystem</a>
+            &copy; @footerNote - SmartHomeManagmentSystem</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

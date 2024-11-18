@@ -27,12 +27,12 @@ namespace SmartHomeManagmentSystem.Controllers
         
         public IActionResult Details(int id)
         {
-            Device device = devices.Find(d => d.Id == id);
-            if (device == null)
-            {
-                return NotFound();
-            }
-            return View(device);
+            //Device device = devices.Find(d => d.Id == id);
+            //if (device == null)
+            //{
+            //    return NotFound();
+            //}
+            return View();
         }
     }
 }

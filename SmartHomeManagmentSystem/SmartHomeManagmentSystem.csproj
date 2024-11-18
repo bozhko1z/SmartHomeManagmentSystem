@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHome.Commons\SmartHome.Commons.csproj" />
+    <ProjectReference Include="..\SmartHome.Web.ViewModels\SmartHome.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

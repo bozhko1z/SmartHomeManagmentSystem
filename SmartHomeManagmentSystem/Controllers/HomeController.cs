@@ -18,11 +18,5 @@ namespace SmartHomeManagmentSystem.Controllers
             ViewBag.Message = "Welcome to the world of Smart Devices";
             return View();
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
