@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SmartHome.Data.Models.Device>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Device List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Device List</h1>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var device in Model)
+                    {
+                        <tr>
+                            <td>@device.DeviceName</td>
+                            <td>@device.Type</td>
+                            <td>
+                                @if (device.Status)
+                                {
+                                    <span class="badge bg-success">On</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Off</span>
+                                }
+                            </td>
+                            <td>
+                                <!-- Example Actions -->
+                                <button class="btn btn-sm btn-primary">Edit</button>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No devices available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

@@ -1,38 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SmartHome.Data;
+using SmartHome.Data.Models;
 using SmartHomeManagmentSystem.Models;
+using Device = SmartHome.Data.Models.Device;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
     public class DeviceController : Controller
     {
-        private static List<Device> devices = new List<Device>();
-        public IActionResult Index()
+        private readonly SmartHomeDbContext dbContext;
+        public DeviceController(SmartHomeDbContext dbContext)
         {
-            return View(devices);
+            this.dbContext = dbContext;
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Index()
         {
-            return View();
+            IEnumerable<Device> allDevices = this.dbContext.Devices.ToList();
+            return View(allDevices);
         }
 
-        [HttpPost]
-        public IActionResult Create(Device device)
-        {
-            devices.Add(device);
-            return RedirectToAction("Index");
-        }
-
-        
-        public IActionResult Details(int id)
-        {
-            //Device device = devices.Find(d => d.Id == id);
-            //if (device == null)
-            //{
-            //    return NotFound();
-            //}
-            return View();
-        }
+       
     }
 }
