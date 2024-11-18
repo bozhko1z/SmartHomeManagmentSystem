@@ -1,12 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using SmartHome.Data;
+
 namespace SmartHomeManagmentSystem
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            string connectionString = builder.Configuration.GetConnectionString("SqlServer");
 
             // Add services to the container.
+            builder.Services.AddDbContext<SmartHomeDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString); 
+            });
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

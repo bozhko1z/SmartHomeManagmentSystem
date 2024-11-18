@@ -16,8 +16,8 @@ namespace SmartHome.Data.Models
 
         public bool Status { get; set; }
 
-        public int RoomId { get; set; }
+        //public int RoomId { get; set; }
 
-        public string UserId { get; set; } = null!;
+        //public string UserId { get; set; } = null!;
     }
 }
