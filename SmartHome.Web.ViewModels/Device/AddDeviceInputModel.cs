@@ -7,20 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SmartHome.Commons.ValidationConstants.Device;
+using static SmartHome.Commons.EntityValidationMessages.Device;
 
 namespace SmartHome.Web.ViewModels.Device
 {
     public class AddDeviceInputModel
     {
-        [Required]
+        [Required(ErrorMessage = DeviceNameValidationMessage)]
         [MaxLength(DeviceMaxName)]
         [MinLength(DeviceMinName)]
         public string DeviceName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = DeviceTypeValidationMessage)]
         public DType Type { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = DeviceStatusValidationMessage)]
         [DefaultValue(DeviceDefaultStatus)]
         public bool Status { get; set; }
     }
