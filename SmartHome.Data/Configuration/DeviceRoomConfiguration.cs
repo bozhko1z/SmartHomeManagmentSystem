@@ -20,11 +20,13 @@ namespace SmartHome.Data.Configuration
 
             builder.HasOne(dr => dr.Device)
                 .WithMany(d => d.DevicesRooms)
-                .HasForeignKey(m => m.DeviceId);
+                .HasForeignKey(m => m.DeviceId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(dr => dr.Room)
                 .WithMany(d => d.DevicesRooms)
-                .HasForeignKey(r => r.RoomId);
+                .HasForeignKey(r => r.RoomId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

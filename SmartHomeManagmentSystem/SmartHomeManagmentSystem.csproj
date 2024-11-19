@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartHome.Commons\SmartHome.Commons.csproj" />
     <ProjectReference Include="..\SmartHome.Data\SmartHome.Data.csproj" />
+    <ProjectReference Include="..\SmartHome.Web.Infrastructure\SmartHome.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SmartHome.Web.ViewModels\SmartHome.Web.ViewModels.csproj" />
   </ItemGroup>
 
