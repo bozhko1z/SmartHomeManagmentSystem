@@ -46,5 +46,25 @@ namespace SmartHomeManagmentSystem.Controllers
             dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Description(string id)
+        {
+            bool IsValidId = Guid.TryParse(id, out Guid guidId);
+
+            if (!IsValidId)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            Room? room = dbContext.Rooms
+                .FirstOrDefault(d => d.Id == guidId);
+
+            if (room == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(room);
+        }
     }
 }
