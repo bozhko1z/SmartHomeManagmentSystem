@@ -22,6 +22,11 @@ namespace SmartHomeManagmentSystem.Controllers
             return View(allDevices);
         }
 
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
        
     }
 }
