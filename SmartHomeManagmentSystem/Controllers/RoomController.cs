@@ -32,7 +32,7 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(AddRoomInputModel inputModel)
+        public IActionResult Add(AddRoomInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
