@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHome.Commons\SmartHome.Commons.csproj" />
+    <ProjectReference Include="..\SmartHome.Data.Models\SmartHome.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>

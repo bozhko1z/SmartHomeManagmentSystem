@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
+using SmartHome.Web.ViewModels.Device;
 using SmartHomeManagmentSystem.Models;
 using Device = SmartHome.Data.Models.Device;
 
@@ -30,8 +31,20 @@ namespace SmartHomeManagmentSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult Add(Device device)
+        public IActionResult Add(AddDeviceInputModel inputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            Device device = new Device()
+            {
+                DeviceName = inputModel.DeviceName,
+                Type = inputModel.Type,
+                Status = inputModel.Status,
+            };
+
             dbContext.Devices.Add(device);
             dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
