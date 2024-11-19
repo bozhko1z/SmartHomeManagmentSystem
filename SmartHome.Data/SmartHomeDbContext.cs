@@ -19,6 +19,10 @@ namespace SmartHome.Data
         }
         public virtual DbSet<Device> Devices { get; set; } = null!;
 
+        public virtual DbSet<Room> Rooms { get; set; } = null!;
+
+        public virtual DbSet<DeviceRoom> DevicesRooms { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

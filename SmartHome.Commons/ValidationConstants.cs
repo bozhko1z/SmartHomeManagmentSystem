@@ -15,5 +15,11 @@ namespace SmartHome.Commons
 
             public const bool DeviceDefaultStatus = false;
         }
+
+        public static class Room
+        {
+            public const int RoomMaxName = 20;
+            public const int RoomMinName = 20;
+        }
     }
 }

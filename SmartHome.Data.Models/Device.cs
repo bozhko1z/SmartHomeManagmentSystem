@@ -4,11 +4,7 @@ namespace SmartHome.Data.Models
 {
     public class Device
     {
-        public Device()
-        {
-            this.Id = Guid.NewGuid();
-        }
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public string DeviceName { get; set; } = null!;
 
