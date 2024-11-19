@@ -12,28 +12,24 @@
     <div class="container mt-5">
         <h1 class="mb-4">Add New Device</h1>
         <form asp-action="Add" method="post">
-            <!-- Device Name -->
             <div class="mb-3">
-                <label for="Name" class="form-label">Device Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter device name" required />
+                <label for="DeviceName" class="form-label">Device Name</label>
+                <input type="text" class="form-control" id="DeviceName" name="DeviceName" required />
+                <span asp-validation-for="DeviceName" class="text-danger"></span>
             </div>
-
-            <!-- Device Type -->
             <div class="mb-3">
                 <label for="Type" class="form-label">Device Type</label>
-                <input type="text" class="form-control" id="Type" name="Type" placeholder="Enter device type" required />
+                <input type="text" class="form-control" id="Type" name="Type" required />
+                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
-
-            <!-- Device Status -->
             <div class="mb-3">
                 <label for="Status" class="form-label">Device Status</label>
                 <select class="form-select" id="Status" name="Status" required>
                     <option value="true">On</option>
                     <option value="false">Off</option>
                 </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
-
-            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary">Add Device</button>
             <a href="/Device/Index" class="btn btn-secondary">Cancel</a>
         </form>

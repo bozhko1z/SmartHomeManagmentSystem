@@ -27,6 +27,14 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             return View();
         }
-       
+
+
+        [HttpPost]
+        public IActionResult Add(Device device)
+        {
+            dbContext.Devices.Add(device);
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
