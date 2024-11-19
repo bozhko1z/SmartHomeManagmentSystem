@@ -87,5 +87,17 @@ namespace SmartHomeManagmentSystem.Controllers
 
             return View(device);
         }
+
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
