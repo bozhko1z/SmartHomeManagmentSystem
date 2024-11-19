@@ -14,5 +14,10 @@ namespace SmartHome.Commons
             public const string DeviceTypeValidationMessage = "Type is required!";
             public const string DeviceStatusValidationMessage = "Status is required!";
         }
+
+        public static class Room
+        {
+            public const string RoomNameValidationMessage = "Name is required!";
+        }
     }
 }
