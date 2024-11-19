@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
-
+using SmartHome.Web.Infrastructure.Extensions;
 namespace SmartHomeManagmentSystem
 {
     public class Program
@@ -18,7 +18,7 @@ namespace SmartHomeManagmentSystem
 
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -39,6 +39,7 @@ namespace SmartHomeManagmentSystem
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            app.ApplyMigrations();
             app.Run();
         }
     }
