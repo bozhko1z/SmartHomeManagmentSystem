@@ -18,8 +18,13 @@
             </div>
             <div class="mb-3">
                 <label for="Type" class="form-label">Device Type</label>
-                <input type="text" class="form-control" id="Type" name="Type" required />
-                <span asp-validation-for="Type" class="text-danger"></span>
+                <select class="form-select" id="Type" name="Type" required>
+                    <option value="" disabled selected>Select a type</option>
+                    @foreach (var item in ViewBag.DType as List<SelectListItem>)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
             </div>
             <div class="mb-3">
                 <label for="Status" class="form-label">Device Status</label>

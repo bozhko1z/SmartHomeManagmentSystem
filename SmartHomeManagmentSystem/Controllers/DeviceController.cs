@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
+using SmartHome.Data.Models.Enums;
 using SmartHome.Web.ViewModels.Device;
 using SmartHomeManagmentSystem.Models;
 using Device = SmartHome.Data.Models.Device;
@@ -26,6 +28,14 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.DType = Enum.GetValues(typeof(DType))
+                               .Cast<DType>()
+                               .Select(dt => new SelectListItem
+                               {
+                                   Value = dt.ToString(),
+                                   Text = dt.ToString()
+                               })
+                               .ToList();
             return View();
         }
 
@@ -37,6 +47,14 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
+            ViewBag.DType = Enum.GetValues(typeof(DType))
+                               .Cast<DType>()
+                               .Select(dt => new SelectListItem
+                               {
+                                   Value = dt.ToString(),
+                                   Text = dt.ToString()
+                               })
+                               .ToList();
 
             Device device = new Device()
             {
