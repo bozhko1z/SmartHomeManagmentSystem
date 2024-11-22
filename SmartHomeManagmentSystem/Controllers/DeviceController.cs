@@ -7,6 +7,7 @@ using SmartHome.Data.Models.Enums;
 using SmartHome.Web.ViewModels.Device;
 using SmartHomeManagmentSystem.Models;
 using Device = SmartHome.Data.Models.Device;
+using SmartHome.Web.ViewModels.Room;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
@@ -21,7 +22,10 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Device> allDevices = await this.dbContext.Devices.ToListAsync();
+            IEnumerable<Device> allDevices = await this.dbContext
+                .Devices
+                .ToArrayAsync();
+
             return View(allDevices);
         }
 
@@ -88,6 +92,54 @@ namespace SmartHomeManagmentSystem.Controllers
 
             return View(device);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AddToRoom(string? id)
+        {
+            Guid devId = Guid.Empty;
+            bool isGuidValid = IsGuidIdValid(id, ref devId);
+            if (!isGuidValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            Device? device = await dbContext
+                .Devices
+                .FirstOrDefaultAsync(d => d.Id == devId);
+
+            if (device == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            AddDeviceToRoomInputModel model = new AddDeviceToRoomInputModel()
+            {
+                Id = id,
+                DeviceName = device.DeviceName,
+                Rooms = await dbContext
+                .Rooms
+                .Include(d => d.DevicesRooms)
+                .ThenInclude(dr => dr.Device)
+                .Select(r => new RoomCheckItemViewModel()
+                {
+                    Id = r.Id.ToString(),
+                    RoomName = r.RoomName,
+                    IsSelected = r.DevicesRooms.Any(dr => dr.Device.Id == devId)
+                })
+                .ToArrayAsync()
+            };
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
 
         [HttpGet]
         public IActionResult Delete()
