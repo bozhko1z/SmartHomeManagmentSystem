@@ -19,14 +19,14 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Device> allDevices = this.dbContext.Devices.ToList();
+            IEnumerable<Device> allDevices = await this.dbContext.Devices.ToListAsync();
             return View(allDevices);
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             ViewBag.DType = Enum.GetValues(typeof(DType))
                                .Cast<DType>()
@@ -41,7 +41,7 @@ namespace SmartHomeManagmentSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult Add(AddDeviceInputModel inputModel)
+        public async Task<IActionResult> Add(AddDeviceInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -63,13 +63,13 @@ namespace SmartHomeManagmentSystem.Controllers
                 Status = inputModel.Status,
             };
 
-            dbContext.Devices.Add(device);
-            dbContext.SaveChanges();
+            await dbContext.Devices.AddAsync(device);
+            await dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Description(string id) 
+        public async Task<IActionResult> Description(string id) 
         {
             Guid guidId = Guid.Empty;
             bool isGuidValid = this.IsGuidIdValid(id, ref guidId);
@@ -78,8 +78,8 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            Device? device = dbContext.Devices
-                .FirstOrDefault(d => d.Id == guidId);
+            Device? device = await dbContext.Devices
+                .FirstOrDefaultAsync(d => d.Id == guidId);
 
             if (device == null)
             {
