@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
 using SmartHome.Web.ViewModels.Room;
@@ -12,27 +13,27 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             this.dbContext = dbContext;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<RoomIndexViewModel> rooms = this.dbContext
+            IEnumerable<RoomIndexViewModel> rooms = await this.dbContext
                 .Rooms
                 .Select(r => new RoomIndexViewModel()
                 {
                     Id = r.Id.ToString(),
                     RoomName = r.RoomName,
                 })
-                .ToArray();
+                .ToArrayAsync();
             return View(rooms);
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(AddRoomInputModel inputModel)
+        public async Task<IActionResult> Add(AddRoomInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -42,8 +43,8 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 RoomName = inputModel.RoomName
             };
-            dbContext.Rooms.Add(room);
-            dbContext.SaveChanges();
+            await dbContext.Rooms.AddAsync(room);
+             await dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
