@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
 using SmartHome.Web.ViewModels.Room;
+using SmartHome.Web.ViewModels.Device;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
@@ -13,27 +14,27 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             this.dbContext = dbContext;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            IEnumerable<RoomIndexViewModel> rooms = await this.dbContext
+            IEnumerable<RoomIndexViewModel> rooms = this.dbContext
                 .Rooms
                 .Select(r => new RoomIndexViewModel()
                 {
                     Id = r.Id.ToString(),
                     RoomName = r.RoomName,
                 })
-                .ToArrayAsync();
+                .ToArray();
             return View(rooms);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddRoomInputModel inputModel)
+        public IActionResult Add(AddRoomInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -43,29 +44,65 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 RoomName = inputModel.RoomName
             };
-            await dbContext.Rooms.AddAsync(room);
-             await dbContext.SaveChangesAsync();
+             dbContext.Rooms.Add(room);
+             dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Description(string id)
+        public async Task<IActionResult> Description(string? id)
         {
-            bool IsValidId = Guid.TryParse(id, out Guid guidId);
+            Guid roomId = Guid.Empty;
+            bool isIdValid = IsRoomIdValid(id, ref roomId);
 
-            if (!IsValidId)
+            if (!isIdValid)
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index));
             }
-            Room? room = dbContext.Rooms
-                .FirstOrDefault(d => d.Id == guidId);
+
+            Room? room = await this.dbContext
+                .Rooms
+                .Include(r=>r.DevicesRooms)
+                .ThenInclude(d=>d.Device)
+                .FirstOrDefaultAsync(r => r.Id == roomId);
 
             if (room == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(room);
+            RoomDescriptionModel viewModel = new RoomDescriptionModel()
+            {
+                RoomName = room.RoomName,
+                Devices = room.DevicesRooms
+                .Select(r => new RoomDeviceViewModel
+                {
+                    Name = r.Device.DeviceName,
+                    Type = r.Device.Type.ToString(),
+                    Status = r.Device.Status
+                })
+                .ToArray()
+            };
+            return View(viewModel);
+
+        }
+
+
+        private bool IsRoomIdValid(string? id, ref Guid roomId)
+        {
+
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                return false;
+            }
+
+            bool isIdValid = Guid.TryParse(id, out roomId);
+            if (!isIdValid)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

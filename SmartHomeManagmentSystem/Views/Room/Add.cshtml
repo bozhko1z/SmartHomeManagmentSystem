@@ -10,15 +10,15 @@
 <body>
     <div class="container mt-5">
         <h1>Add New Room</h1>
-        <form asp-action="Add" method="post">
+        <form asp-action="Add" asp-controller="Room" method="post">
             <div class="mb-3">
                 <label for="RoomName" class="form-label">Room Name</label>
                 <input type="text" class="form-control" id="RoomName" name="RoomName" required />
             </div>
-            
             <button type="submit" class="btn btn-primary">Add Room</button>
             <a href="/Room" class="btn btn-secondary">Cancel</a>
         </form>
+
     </div>
 </body>
 </html>
