@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SmartHomeManagmentSystem.Models;
+
 using System.Buffers.Text;
 using System.Diagnostics;
 

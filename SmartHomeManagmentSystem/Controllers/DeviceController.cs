@@ -5,7 +5,7 @@ using SmartHome.Data;
 using SmartHome.Data.Models;
 using SmartHome.Data.Models.Enums;
 using SmartHome.Web.ViewModels.Device;
-using SmartHomeManagmentSystem.Models;
+
 using Device = SmartHome.Data.Models.Device;
 using SmartHome.Web.ViewModels.Room;
 
@@ -130,6 +130,66 @@ namespace SmartHomeManagmentSystem.Controllers
                 .ToArrayAsync()
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToRoom(AddDeviceToRoomInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Guid deviceGuid = Guid.Empty;
+            bool isGuidValid = IsGuidIdValid(model.Id, ref deviceGuid);
+
+            if (!isGuidValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            Device? device = await dbContext
+                .Devices
+                .FirstOrDefaultAsync(d => d.Id == deviceGuid);
+
+            if (device == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            ICollection<DeviceRoom> deviceRoomsToAdd = new List<DeviceRoom>();
+
+            foreach (RoomCheckItemViewModel roomInputModel in model.Rooms)
+            {
+                if (roomInputModel.IsSelected)
+                {
+                    Guid roomGuid = Guid.Empty;
+                    bool isRoomGuidValid = IsGuidIdValid(roomInputModel.Id, ref roomGuid);
+
+                    if (!isRoomGuidValid)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
+                        return View(model);
+                    }
+                    Room? room = await dbContext
+                        .Rooms
+                        .FirstOrDefaultAsync(d => d.Id == roomGuid);
+                    if (room == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
+                        return View(model);
+                    }
+
+                    deviceRoomsToAdd.Add(new DeviceRoom()
+                    {
+                        Room = room,
+                        Device = device
+                    });
+                }
+            }
+            await this.dbContext.AddRangeAsync(deviceRoomsToAdd);
+            await this.dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), "Room");
         }
 
 

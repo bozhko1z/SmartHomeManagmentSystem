@@ -9,16 +9,17 @@
         <form asp-action="AddToRoom" method="post">
             <input type="hidden" asp-for="Id"/>
             <input type="hidden" asp-for="DeviceName"/>
+            
             <h3>Select Rooms:</h3>
 
             <div class="form-group">
-                @foreach (RoomCheckItemViewModel room in Model.Rooms)
+                @for (var i = 0; i < Model.Rooms.Count; i++)
                 {
                     <div class="form-check">
-                        <input type="hidden" asp-for="@room.Id"/>
-                        <input type="hidden" asp-for="@room.RoomName"/>
-                        <input type="checkbox" asp-for="@room.IsSelected" class="form-check-input"/>
-                        <label class="form-check-label">@room.RoomName</label>
+                        <input type="hidden" asp-for="@Model.Rooms[i].Id"/>
+                        <input type="hidden" asp-for="@Model.Rooms[i].RoomName"/>
+                        <input type="checkbox" asp-for="@Model.Rooms[i].IsSelected" class="form-check-input" />
+                        <label class="form-check-label">@Model.Rooms[i].RoomName</label>
                     </div>
                 }
             </div>
@@ -28,5 +29,3 @@
         </form>
     </div>
 </body>
-</html>
-

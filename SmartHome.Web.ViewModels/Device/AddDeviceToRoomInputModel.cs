@@ -14,6 +14,6 @@ namespace SmartHome.Web.ViewModels.Device
         [MaxLength(DeviceMaxName)]
         public string DeviceName { get; set; } = null!;
 
-        public IEnumerable<RoomCheckItemViewModel> Rooms { get; set; } = new HashSet<RoomCheckItemViewModel>();
+        public IList<RoomCheckItemViewModel> Rooms { get; set; } = new List<RoomCheckItemViewModel>();
     }
 }
