@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartHome.Data;
 
@@ -11,9 +12,11 @@ using SmartHome.Data;
 namespace SmartHome.Data.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    partial class SmartHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241122191856_SoftDeleteRoom")]
+    partial class SoftDeleteRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +51,14 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f20bca37-5510-407a-bc86-8a956a496d02"),
+                            Id = new Guid("6df1a4d1-22f7-4e2f-aefb-dbbcef3bd06a"),
                             DeviceName = "Switch 1",
                             Status = false,
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("a4f4ae0d-b4e4-4fb1-8a20-9d20fb986172"),
+                            Id = new Guid("5df0c4c4-3094-4bad-bf5a-1c236362d0b8"),
                             DeviceName = "Switch 2",
                             Status = false,
                             Type = 1
@@ -70,11 +73,6 @@ namespace SmartHome.Data.Migrations
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.HasKey("DeviceId", "RoomId");
 
                     b.HasIndex("RoomId");
@@ -88,6 +86,11 @@ namespace SmartHome.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("RoomName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -100,17 +103,20 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6a5be361-7399-4f80-8df9-248d35c8c14e"),
+                            Id = new Guid("9fdde257-8527-4496-b1e3-417b0873ee3a"),
+                            IsDeleted = false,
                             RoomName = "Kitchen"
                         },
                         new
                         {
-                            Id = new Guid("c8805ffb-ff4a-4af4-8647-49c5b3abdf31"),
+                            Id = new Guid("2b752091-78f9-4d51-a492-bef2929d85c5"),
+                            IsDeleted = false,
                             RoomName = "Living Room"
                         },
                         new
                         {
-                            Id = new Guid("339e738e-e783-4ff1-b75b-1ecf7f7c634a"),
+                            Id = new Guid("0ec2d40e-c5f3-43fe-8337-77bd8a4c20cf"),
+                            IsDeleted = false,
                             RoomName = "Bathroom"
                         });
                 });

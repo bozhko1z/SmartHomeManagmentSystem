@@ -161,31 +161,49 @@ namespace SmartHomeManagmentSystem.Controllers
 
             foreach (RoomCheckItemViewModel roomInputModel in model.Rooms)
             {
+                Guid roomGuid = Guid.Empty;
+                bool isRoomGuidValid = IsGuidIdValid(roomInputModel.Id, ref roomGuid);
+
+                if (!isRoomGuidValid)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
+                    return View(model);
+                }
+                Room? room = await dbContext
+                    .Rooms
+                    .FirstOrDefaultAsync(d => d.Id == roomGuid);
+                if (room == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
+                    return View(model);
+                }
+                DeviceRoom? deviceRoom = await this.dbContext.DevicesRooms
+                        .FirstOrDefaultAsync(d => d.DeviceId == deviceGuid && d.RoomId == roomGuid);
                 if (roomInputModel.IsSelected)
                 {
-                    Guid roomGuid = Guid.Empty;
-                    bool isRoomGuidValid = IsGuidIdValid(roomInputModel.Id, ref roomGuid);
-
-                    if (!isRoomGuidValid)
+                    if (deviceRoom == null)
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
-                        return View(model);
+                        deviceRoomsToAdd.Add(new DeviceRoom()
+                        {
+                            Room = room,
+                            Device = device
+                        });
                     }
-                    Room? room = await dbContext
-                        .Rooms
-                        .FirstOrDefaultAsync(d => d.Id == roomGuid);
-                    if (room == null)
+                    else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
-                        return View(model);
+                        deviceRoom.IsDeleted = false;
                     }
-
-                    deviceRoomsToAdd.Add(new DeviceRoom()
-                    {
-                        Room = room,
-                        Device = device
-                    });
                 }
+                else
+                {
+                    
+
+                    if (deviceRoom != null)
+                    {
+                        deviceRoom.IsDeleted = true;
+                    }
+                }
+                this.dbContext.SaveChangesAsync();
             }
             await this.dbContext.AddRangeAsync(deviceRoomsToAdd);
             await this.dbContext.SaveChangesAsync();

@@ -15,5 +15,7 @@ namespace SmartHome.Data.Models
         public Guid DeviceId { get; set; }
 
         public virtual Device Device { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
     }
 }

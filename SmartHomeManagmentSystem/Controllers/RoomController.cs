@@ -75,6 +75,7 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 RoomName = room.RoomName,
                 Devices = room.DevicesRooms
+                .Where(d => d.IsDeleted == false)
                 .Select(r => new RoomDeviceViewModel
                 {
                     Name = r.Device.DeviceName,

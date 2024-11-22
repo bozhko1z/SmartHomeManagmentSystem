@@ -18,6 +18,8 @@ namespace SmartHome.Data.Configuration
                 pk.DeviceId, pk.RoomId
             });
 
+            builder.Property(d => d.IsDeleted).HasDefaultValue(false);
+
             builder.HasOne(dr => dr.Device)
                 .WithMany(d => d.DevicesRooms)
                 .HasForeignKey(m => m.DeviceId)
