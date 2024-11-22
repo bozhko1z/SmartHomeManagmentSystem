@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartHomeManagmentSystem.Models;
+using System.Buffers.Text;
 using System.Diagnostics;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 

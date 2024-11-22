@@ -10,7 +10,7 @@ using Device = SmartHome.Data.Models.Device;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
-    public class DeviceController : Controller
+    public class DeviceController : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
         public DeviceController(SmartHomeDbContext dbContext)
@@ -71,9 +71,10 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public IActionResult Description(string id) 
         {
-            bool IsValidId = Guid.TryParse(id, out Guid guidId);
+            Guid guidId = Guid.Empty;
+            bool isGuidValid = this.IsGuidIdValid(id, ref guidId);
 
-            if (!IsValidId)
+            if (!isGuidValid)
             {
                 return RedirectToAction(nameof(Index));
             }

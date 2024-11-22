@@ -7,7 +7,7 @@ using SmartHome.Web.ViewModels.Device;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
-    public class RoomController : Controller
+    public class RoomController : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
         public RoomController(SmartHomeDbContext dbContext)
@@ -53,7 +53,7 @@ namespace SmartHomeManagmentSystem.Controllers
         public async Task<IActionResult> Description(string? id)
         {
             Guid roomId = Guid.Empty;
-            bool isIdValid = IsRoomIdValid(id, ref roomId);
+            bool isIdValid = IsGuidIdValid(id, ref roomId);
 
             if (!isIdValid)
             {
@@ -85,24 +85,6 @@ namespace SmartHomeManagmentSystem.Controllers
             };
             return View(viewModel);
 
-        }
-
-
-        private bool IsRoomIdValid(string? id, ref Guid roomId)
-        {
-
-            if (String.IsNullOrWhiteSpace(id))
-            {
-                return false;
-            }
-
-            bool isIdValid = Guid.TryParse(id, out roomId);
-            if (!isIdValid)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
