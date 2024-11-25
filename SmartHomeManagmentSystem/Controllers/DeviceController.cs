@@ -133,7 +133,7 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToRoom(AddDeviceToRoomInputModel model)
+        public async Task<IActionResult> AddToRoom(AddDeviceToRoomInputModel model) 
         {
             if (!ModelState.IsValid)
             {
@@ -177,7 +177,7 @@ namespace SmartHomeManagmentSystem.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid room selection!!!");
                     return View(model);
                 }
-                DeviceRoom? deviceRoom = await this.dbContext.DevicesRooms
+                DeviceRoom deviceRoom = await this.dbContext.DevicesRooms
                         .FirstOrDefaultAsync(d => d.DeviceId == deviceGuid && d.RoomId == roomGuid);
                 if (roomInputModel.IsSelected)
                 {
