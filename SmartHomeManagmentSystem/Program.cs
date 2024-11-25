@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
@@ -19,14 +20,16 @@ namespace SmartHomeManagmentSystem
             });
 
             builder.Services
-                .AddDefaultIdentity<ApplicationUser>(cfg =>
+                .AddIdentity<ApplicationUser, IdentityRole<Guid>>(cfg =>
                 {
 
                 })
+                .AddEntityFrameworkStores<SmartHomeDbContext>()
                 .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<SmartHomeDbContext>();
+                .AddSignInManager<SignInManager<ApplicationUser>>();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
 
