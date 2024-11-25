@@ -26,7 +26,8 @@ namespace SmartHomeManagmentSystem
                 })
                 .AddEntityFrameworkStores<SmartHomeDbContext>()
                 .AddRoles<IdentityRole<Guid>>()
-                .AddSignInManager<SignInManager<ApplicationUser>>();
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddUserManager<UserManager<ApplicationUser>>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
