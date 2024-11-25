@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{5C21A7BB-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHome.Data", "SmartHome.Data\SmartHome.Data.csproj", "{C1B83D30-7C48-4996-9127-02D2946F8204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome.Web.Infrastructure", "SmartHome.Web.Infrastructure\SmartHome.Web.Infrastructure.csproj", "{985400F9-D716-4C8C-B84E-B04EA9C4CD16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHome.Web.Infrastructure", "SmartHome.Web.Infrastructure\SmartHome.Web.Infrastructure.csproj", "{985400F9-D716-4C8C-B84E-B04EA9C4CD16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
