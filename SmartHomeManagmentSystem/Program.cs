@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
+using SmartHome.Data.Models;
 using SmartHome.Web.Infrastructure.Extensions;
 namespace SmartHomeManagmentSystem
 {
@@ -15,6 +17,14 @@ namespace SmartHomeManagmentSystem
             {
                 options.UseSqlServer(connectionString); 
             });
+
+            builder.Services
+                .AddDefaultIdentity<ApplicationUser>(cfg =>
+                {
+
+                })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<SmartHomeDbContext>();
 
             builder.Services.AddControllersWithViews();
 
@@ -33,11 +43,13 @@ namespace SmartHomeManagmentSystem
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.ApplyMigrations();
             app.Run();
