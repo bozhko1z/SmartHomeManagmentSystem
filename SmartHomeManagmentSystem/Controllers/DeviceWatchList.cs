@@ -41,7 +41,7 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToWatchList(string deviceId)
+        public async Task<IActionResult> AddToWatchList(string? deviceId)
         {
             Guid deviceGuid = Guid.Empty;
             if (!IsGuidIdValid(deviceId, ref deviceGuid))
@@ -71,6 +71,38 @@ namespace SmartHomeManagmentSystem.Controllers
                     DeviceId = deviceGuid
                 };
                 await dbContext.UsersDevices.AddAsync(newUserDevice);
+                await dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromWatchlist(string? deviceId)
+        {
+            Guid deviceGuid = Guid.Empty;
+            if (!IsGuidIdValid(deviceId, ref deviceGuid))
+            {
+                return RedirectToAction("Index", "Device");
+            }
+
+            Device? device = await dbContext.Devices
+                .FirstOrDefaultAsync(d => d.Id == deviceGuid);
+
+            if (device == null)
+            {
+                return RedirectToAction("Index", "Device");
+            }
+
+            Guid userGuid = Guid.Parse(userManager.GetUserId(User)!);
+
+            UserDevice? userDevice = await dbContext
+                .UsersDevices
+                .FirstOrDefaultAsync(u => u.UserId == userGuid && u.DeviceId == deviceGuid);
+
+            if (userDevice != null)
+            {
+                dbContext.UsersDevices.Remove(userDevice);
                 await dbContext.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

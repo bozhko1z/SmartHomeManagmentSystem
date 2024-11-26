@@ -47,7 +47,7 @@
                                 <a href="/Device/Description/@device.DeviceId" class="btn btn-info btn-sm">Description</a>
 
                                 <!-- Remove from Watchlist -->
-                                <form asp-action="RemoveFromWatchlist" method="post" style="display:inline">
+                                <form asp-controller="DeviceWatchList" asp-action="RemoveFromWatchlist" method="post" style="display:inline">
                                     <input type="hidden" name="deviceId" value="@device.DeviceId" />
                                     <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                 </form>
