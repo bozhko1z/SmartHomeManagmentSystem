@@ -4,7 +4,7 @@ namespace SmartHomeManagmentSystem.Controllers
 {
     public class BaseController : Controller
     {
-        protected bool IsGuidIdValid(string? id, ref Guid roomId)
+        protected bool IsGuidIdValid(string? id, ref Guid parseId)
         {
 
             if (String.IsNullOrWhiteSpace(id))
@@ -12,7 +12,7 @@ namespace SmartHomeManagmentSystem.Controllers
                 return false;
             }
 
-            bool isIdValid = Guid.TryParse(id, out roomId);
+            bool isIdValid = Guid.TryParse(id, out parseId);
             if (!isIdValid)
             {
                 return false;

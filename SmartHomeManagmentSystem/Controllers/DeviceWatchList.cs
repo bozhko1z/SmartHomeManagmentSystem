@@ -20,6 +20,7 @@ namespace SmartHomeManagmentSystem.Controllers
             this.userManager = userManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             string? userId = this.userManager.GetUserId(User)!;
@@ -37,6 +38,42 @@ namespace SmartHomeManagmentSystem.Controllers
                 .ToListAsync();
 
             return View(deviceWatchList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToWatchList(string deviceId)
+        {
+            Guid deviceGuid = Guid.Empty;
+            if (!IsGuidIdValid(deviceId, ref deviceGuid))
+            {
+                return RedirectToAction("Index", "Device");                
+            }
+
+            Device? device = await dbContext.Devices
+                .FirstOrDefaultAsync(d => d.Id == deviceGuid);
+
+            if (device == null)
+            {
+                return RedirectToAction("Index", "Device");
+            }
+
+            Guid userGuid = Guid.Parse(userManager.GetUserId(User)!);
+
+            bool alreadyAddedToList = await dbContext
+                .UsersDevices
+                .AnyAsync(u => u.UserId == userGuid && u.DeviceId == deviceGuid);
+
+            if (!alreadyAddedToList)
+            {
+                UserDevice newUserDevice = new UserDevice()
+                {
+                    UserId = userGuid,
+                    DeviceId = deviceGuid
+                };
+                await dbContext.UsersDevices.AddAsync(newUserDevice);
+                await dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
