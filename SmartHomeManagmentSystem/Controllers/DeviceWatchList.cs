@@ -8,6 +8,7 @@ using SmartHome.Web.ViewModels.DeviceWatchList;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
+    [Authorize]
     public class DeviceWatchList : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
@@ -19,7 +20,6 @@ namespace SmartHomeManagmentSystem.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             string? userId = this.userManager.GetUserId(User)!;
@@ -35,8 +35,6 @@ namespace SmartHomeManagmentSystem.Controllers
                     Status = ud.Device.Status
                 })
                 .ToListAsync();
-
-
 
             return View(deviceWatchList);
         }
