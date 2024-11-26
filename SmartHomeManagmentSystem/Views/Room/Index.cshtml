@@ -12,7 +12,10 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1>Room List</h1>
-            <a href="/Room/Add" class="btn btn-success">Add New Room</a>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <a href="/Room/Add" class="btn btn-success">Add New Room</a>
+            }
         </div>
         <table class="table table-striped table-bordered">
             <thead>
