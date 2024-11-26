@@ -2,7 +2,7 @@
 
 namespace SmartHomeManagmentSystem.Controllers
 {
-    public class DeviceWatchList : Controller
+    public class DeviceWatchList : BaseController
     {
         public IActionResult Index()
         {
