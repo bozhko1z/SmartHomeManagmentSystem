@@ -8,5 +8,7 @@ namespace SmartHome.Data.Models
         {
             this.Id = Guid.NewGuid();
         }
+
+        public virtual ICollection<UserDevice> UserDevices { get; set; } = new HashSet<UserDevice>();
     }
 }
