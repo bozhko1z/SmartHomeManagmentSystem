@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
 using SmartHome.Web.ViewModels.DeviceWatchList;
@@ -17,17 +19,26 @@ namespace SmartHomeManagmentSystem.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            string? userId = this.userManager.GetUserId(User);
-            if (String.IsNullOrEmpty(userId))
-            {
-                return RedirectToPage("Login");
-            }
+            string? userId = this.userManager.GetUserId(User)!;
             
+            IEnumerable<UserWatchListViewModel> deviceWatchList = await this.dbContext
+                .UsersDevices
+                .Where(ud => ud.UserId.ToString().ToLower() == userId.ToLower())
+                .Select(ud => new UserWatchListViewModel()
+                {
+                    DeviceId = ud.DeviceId.ToString(),
+                    DeviceName = ud.Device.DeviceName,
+                    Type = ud.Device.Type.ToString(),
+                    Status = ud.Device.Status
+                })
+                .ToListAsync();
 
 
-            return View();
+
+            return View(deviceWatchList);
         }
     }
 }
