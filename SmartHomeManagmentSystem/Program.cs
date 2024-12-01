@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
+using SmartHome.Data.Repository.Interfaces;
+using SmartHome.Data.Repository;
 using SmartHome.Services.Mapping;
 using SmartHome.Web.Infrastructure.Extensions;
 using SmartHome.Web.ViewModels;
@@ -35,6 +37,11 @@ namespace SmartHomeManagmentSystem
             {
                 cfg.LoginPath = "/Identity/Account/Login";
             });
+
+            builder.Services.AddScoped<IRepository<Device, Guid>, Repository<Device, Guid>>();
+            builder.Services.AddScoped<IRepository<Room, Guid>, Repository<Room, Guid>>();
+            builder.Services.AddScoped<IRepository<DeviceRoom, object>, Repository<DeviceRoom, object>>();
+            builder.Services.AddScoped<IRepository<UserDevice, object>, Repository<UserDevice, object>>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
