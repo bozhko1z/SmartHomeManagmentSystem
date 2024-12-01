@@ -59,9 +59,18 @@ namespace SmartHome.Data.Repository
             return true;
         }
 
-        public Task<bool> DeleteAsync(TId id)
+        public async Task<bool> DeleteAsync(TId id)
         {
-            throw new NotImplementedException();
+            TType entity = await GetByIdAsync(id);
+
+            if (entity == null)
+            {
+                return false;
+            }
+            dbSet.Remove(entity);
+            await dBcontext.SaveChangesAsync();
+
+            return true;
         }
 
         public IEnumerable<TType> GetAll()
@@ -72,16 +81,6 @@ namespace SmartHome.Data.Repository
         public async Task<IEnumerable<TType>> GetAllAsync()
         {
             return await this.dbSet.ToArrayAsync();
-        }
-
-        public bool SoftDelete(TId id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> SoftDeleteAsync(TId id)
-        {
-            throw new NotImplementedException();
         }
 
         public bool Update(TType item)
