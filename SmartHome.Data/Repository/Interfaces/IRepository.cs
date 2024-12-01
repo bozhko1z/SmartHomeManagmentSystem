@@ -23,6 +23,6 @@ namespace SmartHome.Data.Repository.Interfaces
         bool Delete(TId id);
         Task<bool> DeleteAsync(TId id);
         bool Update(TType item);
-        Task UpdateAysnc(TType item);
+        Task<bool> UpdateAysnc(TType item);
     }
 }

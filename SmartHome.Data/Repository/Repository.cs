@@ -83,19 +83,40 @@ namespace SmartHome.Data.Repository
             return await this.dbSet.ToArrayAsync();
         }
 
-        public bool Update(TType item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAysnc(TType item)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<TType> GetAllAttached()
         {
             return this.dbSet.AsQueryable();
+        }
+
+        public bool Update(TType item)
+        {
+            try
+            {
+                this.dbSet.Attach(item);
+                dBcontext.Entry(item).State = EntityState.Modified;
+                dBcontext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            } 
+        }
+
+        public async Task<bool> UpdateAysnc(TType item)
+        {
+            try
+            {
+                this.dbSet.Attach(item);
+                dBcontext.Entry(item).State = EntityState.Modified;
+                await dBcontext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
