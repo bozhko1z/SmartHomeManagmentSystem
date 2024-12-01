@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartHome.Data;
 using SmartHome.Data.Models;
+using SmartHome.Services.Mapping;
 using SmartHome.Web.Infrastructure.Extensions;
+using SmartHome.Web.ViewModels;
 namespace SmartHomeManagmentSystem
 {
     public class Program
@@ -38,6 +40,8 @@ namespace SmartHomeManagmentSystem
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
