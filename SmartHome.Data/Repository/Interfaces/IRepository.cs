@@ -6,10 +6,26 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Data.Repository.Interfaces
 {
-    public interface IRepository<T>
+    public interface IRepository<TType, TId>
     {
-        T GetById(Guid id);
+        TType GetById(TId id);
 
-        T GetByIdAsync(Guid id);
+        Task<TType> GetByIdAsync(TId id);
+
+        IEnumerable<TType> GetAll();
+        Task<IEnumerable<TType>> GetAllAsync();
+
+        void Add(TType item);
+        Task AddAysnc(TType item);
+
+        bool Delete(TId id);
+        Task<bool> DeleteAsync(TId id);
+
+        bool SoftDelete(TId id);
+
+        Task<bool> SoftDeleteAsync(TId id);
+
+        bool Update(TType item);
+        Task UpdateAysnc(TType item);
     }
 }
