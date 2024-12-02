@@ -10,7 +10,7 @@ namespace SmartHome.Commons
     {
         public static class Device
         {
-            public const int DeviceMaxName = 10;
+            public const int DeviceMaxName = 20;
             public const int DeviceMinName = 5;
 
             public const bool DeviceDefaultStatus = false;

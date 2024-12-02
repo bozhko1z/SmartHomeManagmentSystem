@@ -8,7 +8,7 @@ namespace SmartHome.Data.Models
 
         public string DeviceName { get; set; } = null!;
 
-        public DType Type { get; set; }
+        public Types Type { get; set; }
 
         public bool Status { get; set; }
 

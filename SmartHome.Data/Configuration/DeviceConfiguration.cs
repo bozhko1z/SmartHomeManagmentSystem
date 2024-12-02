@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SmartHome.Data.Models;
 using static SmartHome.Commons.ValidationConstants.Device;
+using SmartHome.Data.Models.Enums;
 
 namespace SmartHome.Data.Configuration
 {
@@ -30,14 +31,14 @@ namespace SmartHome.Data.Configuration
                  new Device
                  {
                      DeviceName = "Switch 1",
-                     Type = Models.Enums.DType.Switch,
+                     Type = Types.Switch,
                      Status = false
                  },
 
                  new Device
                  {
                     DeviceName = "Switch 2",
-                    Type = Models.Enums.DType.Switch,
+                    Type = Types.Switch,
                     Status = false
                  }
             };

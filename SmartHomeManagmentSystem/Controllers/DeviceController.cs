@@ -8,15 +8,18 @@ using SmartHome.Web.ViewModels.Device;
 
 using Device = SmartHome.Data.Models.Device;
 using SmartHome.Web.ViewModels.Room;
+using SmartHome.Data.Repository.Interfaces;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
     public class DeviceController : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
-        public DeviceController(SmartHomeDbContext dbContext)
+        private IRepository<Device, Guid> deviceRepo;
+        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo)
         {
             this.dbContext = dbContext;
+            this.deviceRepo = deviceRepo;
         }
 
         [HttpGet]
@@ -32,14 +35,7 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            ViewBag.DType = Enum.GetValues(typeof(DType))
-                               .Cast<DType>()
-                               .Select(dt => new SelectListItem
-                               {
-                                   Value = dt.ToString(),
-                                   Text = dt.ToString()
-                               })
-                               .ToList();
+            
             return View();
         }
 
@@ -51,14 +47,7 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-            ViewBag.DType = Enum.GetValues(typeof(DType))
-                               .Cast<DType>()
-                               .Select(dt => new SelectListItem
-                               {
-                                   Value = dt.ToString(),
-                                   Text = dt.ToString()
-                               })
-                               .ToList();
+            
 
             Device device = new Device()
             {

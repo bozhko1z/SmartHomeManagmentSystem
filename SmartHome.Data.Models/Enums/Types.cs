@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Data.Models.Enums
 {
-    public enum DType
+    public enum Types
     {
         Light = 0,
         Switch = 1,
         Thermostat = 2
+
     }
 }

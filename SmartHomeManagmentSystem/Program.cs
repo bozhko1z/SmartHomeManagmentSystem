@@ -44,7 +44,7 @@ namespace SmartHomeManagmentSystem
             //builder.Services.AddScoped<IRepository<UserDevice, object>, Repository<UserDevice, object>>();
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-
+            
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
