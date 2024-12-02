@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SmartHome.Services.Mapping;
+using System.ComponentModel.DataAnnotations;
 using static SmartHome.Commons.ValidationConstants.Room;
 
 namespace SmartHome.Web.ViewModels.Room
 {
-    public class RoomIndexViewModel
+    using Data.Models;
+    public class RoomIndexViewModel : IMapFrom<Room>
     {
         public string Id { get; set; } = null!;
 

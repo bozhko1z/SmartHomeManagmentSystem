@@ -4,26 +4,24 @@ using SmartHome.Data;
 using SmartHome.Data.Models;
 using SmartHome.Web.ViewModels.Room;
 using SmartHome.Web.ViewModels.Device;
+using SmartHome.Services.Data.Interfaces;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
     public class RoomController : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
-        public RoomController(SmartHomeDbContext dbContext)
+        private readonly IRoomService roomService;
+        public RoomController(SmartHomeDbContext dbContext, IRoomService roomService)
         {
             this.dbContext = dbContext;
+            this.roomService = roomService;
         }
         public async Task<IActionResult> Index()
         {
-            IEnumerable<RoomIndexViewModel> rooms = await this.dbContext
-                .Rooms
-                .Select(r => new RoomIndexViewModel()
-                {
-                    Id = r.Id.ToString(),
-                    RoomName = r.RoomName,
-                })
-                .ToArrayAsync();
+           IEnumerable<RoomIndexViewModel> rooms = await this.roomService.GetAllRoomsAsync();
+
+
             return View(rooms);
         }
 

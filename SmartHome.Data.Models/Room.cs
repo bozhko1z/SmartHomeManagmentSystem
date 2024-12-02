@@ -12,8 +12,6 @@ namespace SmartHome.Data.Models
 
         public string RoomName { get; set; } = null!;
 
-        //public int DeviceId { get; set; }
-
         public virtual ICollection<DeviceRoom> DevicesRooms { get; set; } = new HashSet<DeviceRoom>();
     }
 }

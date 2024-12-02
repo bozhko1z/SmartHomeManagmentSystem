@@ -8,6 +8,8 @@ using SmartHome.Data.Repository;
 using SmartHome.Services.Mapping;
 using SmartHome.Web.Infrastructure.Extensions;
 using SmartHome.Web.ViewModels;
+using SmartHome.Services.Data.Interfaces;
+using SmartHome.Services.Data;
 namespace SmartHomeManagmentSystem
 {
     public class Program
@@ -44,7 +46,8 @@ namespace SmartHomeManagmentSystem
             //builder.Services.AddScoped<IRepository<UserDevice, object>, Repository<UserDevice, object>>();
 
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-            
+            builder.Services.AddScoped<IRoomService, RoomService>();
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 

@@ -46,7 +46,6 @@ namespace SmartHome.Web.Infrastructure.Extensions
                     }
                     repositoryInterface = repositoryInterface.MakeGenericType(constructArgs);
                     repositoryInstanceType = repositoryInstanceType.MakeGenericType(constructArgs);
-
                     services.AddScoped(repositoryInterface, repositoryInstanceType);
                 }
             }

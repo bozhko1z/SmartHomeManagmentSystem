@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHome.Services.Mapping\SmartHome.Services.Mapping.csproj" />
+  </ItemGroup>
+
 </Project>

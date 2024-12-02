@@ -9,6 +9,7 @@ using SmartHome.Web.ViewModels.Device;
 using Device = SmartHome.Data.Models.Device;
 using SmartHome.Web.ViewModels.Room;
 using SmartHome.Data.Repository.Interfaces;
+using SmartHome.Data.Repository;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
@@ -20,6 +21,7 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             this.dbContext = dbContext;
             this.deviceRepo = deviceRepo;
+
         }
 
         [HttpGet]

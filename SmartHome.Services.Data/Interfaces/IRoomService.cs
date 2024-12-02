@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome.Web.ViewModels.Room;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace SmartHome.Services.Data.Interfaces
 {
     public interface IRoomService
     {
-        //todo: implement the interface
+        Task AddRoomAsync(AddRoomInputModel model);
+
+        Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id);
+
+        Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync();
     }
 }

@@ -30,14 +30,5 @@ namespace SmartHome.Data.Configuration
                 .HasForeignKey(r => r.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
-        private IEnumerable<DeviceRoom> SeedDevicesRooms()
-        {
-            IEnumerable<DeviceRoom> deviceRooms = new List<DeviceRoom>()
-            {
-                
-            };
-
-            return deviceRooms;
-        }
     }
 }
