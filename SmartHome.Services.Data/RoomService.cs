@@ -14,14 +14,18 @@ namespace SmartHome.Services.Data
 {
     public class RoomService : IRoomService
     {
-        private IRepository<Room, Guid> roomRepository;
+        private readonly IRepository<Room, Guid> roomRepository;
         public RoomService(IRepository<Room, Guid> roomRepository)
         {
             this.roomRepository = roomRepository;
         }
-        public Task AddRoomAsync(AddRoomInputModel model)
+        public async Task AddRoomAsync(AddRoomInputModel model)
         {
-            throw new NotImplementedException();
+            Room room = new Room();
+
+            AutoMapperConfig.MapperInstance.Map(model, room);
+
+            await this.roomRepository.AddAysnc(room);
         }
 
         public async Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync()

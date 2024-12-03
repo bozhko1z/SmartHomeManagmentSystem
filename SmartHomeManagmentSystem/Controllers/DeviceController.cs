@@ -17,11 +17,12 @@ namespace SmartHomeManagmentSystem.Controllers
     {
         private readonly SmartHomeDbContext dbContext;
         private IRepository<Device, Guid> deviceRepo;
-        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo)
+        private readonly Repository<Device, int> typesRepository;
+        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo, Repository<Device, int> typesRepository)
         {
             this.dbContext = dbContext;
             this.deviceRepo = deviceRepo;
-
+            this.typesRepository = typesRepository;
         }
 
         [HttpGet]
@@ -58,8 +59,7 @@ namespace SmartHomeManagmentSystem.Controllers
                 Status = inputModel.Status,
             };
 
-            await dbContext.Devices.AddAsync(device);
-            await dbContext.SaveChangesAsync();
+            await deviceRepo.AddAysnc(device);
             return RedirectToAction(nameof(Index));
         }
 

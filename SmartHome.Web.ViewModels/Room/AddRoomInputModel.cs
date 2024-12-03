@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHome.Services.Mapping;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static SmartHome.Commons.EntityValidationMessages.Room;
@@ -6,7 +7,8 @@ using static SmartHome.Commons.ValidationConstants.Room;
 
 namespace SmartHome.Web.ViewModels.Room
 {
-    public class AddRoomInputModel
+    using Data.Models;
+    public class AddRoomInputModel : IMapTo<Room>
     {
         [Required(ErrorMessage = RoomNameValidationMessage)]
         [MinLength(RoomMinName)]

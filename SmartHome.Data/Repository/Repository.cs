@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartHome.Data.Models.Enums;
 using SmartHome.Data.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace SmartHome.Data.Repository
 {
     public class Repository<TType, TId> : IRepository<TType, TId>
-        where TType : class, new()
+        where TType : class
     {
         private readonly SmartHomeDbContext dBcontext;
         private readonly DbSet<TType> dbSet;

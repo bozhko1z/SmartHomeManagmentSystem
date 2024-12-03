@@ -38,12 +38,9 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-            Room room = new Room()
-            {
-                RoomName = inputModel.RoomName
-            };
-             await dbContext.Rooms.AddAsync(room);
-             await dbContext.SaveChangesAsync();
+
+            await this.roomService.AddRoomAsync(inputModel);
+
             return RedirectToAction(nameof(Index));
         }
 
