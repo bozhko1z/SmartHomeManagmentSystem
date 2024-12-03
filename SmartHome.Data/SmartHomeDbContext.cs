@@ -27,6 +27,9 @@ namespace SmartHome.Data
 
         public virtual DbSet<UserDevice> UsersDevices { get; set; } = null!;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+            => optionsBuilder.UseSqlServer("Server=DESKTOP-8M32SFU;Database=SmartHomeManagmentSystem;Trusted_Connection=True;TrustServerCertificate=True;");
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
