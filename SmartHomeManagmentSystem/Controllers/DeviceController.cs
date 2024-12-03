@@ -38,7 +38,21 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            return View();
+            var deviceTypes = new List<Types>
+            {
+                new Types { Id = 1, Name = "Switch" },
+                new Types { Id = 2, Name = "Light" },
+                new Types { Id = 3, Name = "Thermostat" }
+            };
+
+            var model = new AddDeviceInputModel
+            {
+                
+            };
+
+            ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
+
+            return View(model);
         }
 
 
@@ -49,14 +63,21 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-            ViewBag.Types = new SelectList(Types.GetAll(), "Id", "Name");
-
+            
             Device device = new Device()
             {
                 DeviceName = inputModel.DeviceName,
-                Type = inputModel.TypeId.ToString(),
+                Type = inputModel.DeviceType.ToString(),
                 Status = inputModel.Status,
             };
+            //if validation fails
+            var deviceTypes = new List<Types>
+            {
+                new Types { Id = 1, Name = "Switch" },
+                new Types { Id = 2, Name = "Light" },
+                new Types { Id = 3, Name = "Thermostat" }
+            };
+            ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
 
             await deviceRepo.AddAysnc(device);
             return RedirectToAction(nameof(Index));

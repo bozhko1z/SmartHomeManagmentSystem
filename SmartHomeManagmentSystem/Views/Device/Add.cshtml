@@ -17,11 +17,11 @@
                 <span asp-validation-for="DeviceName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="TypeId" class="form-label">Device Type</label>
-                <select asp-for="TypeId" asp-items="ViewBag.DeviceTypes" class="form-select">
+                <label asp-for="DeviceType.Id" class="form-label">Device Type</label>
+                <select asp-for="DeviceType.Id" asp-items="ViewBag.DeviceTypes" class="form-select">
                     <option value="" disabled selected>-- Select a Device Type --</option>
                 </select>
-                <span asp-validation-for="TypeId" class="text-danger"></span>
+                <span asp-validation-for="DeviceType.Id" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Status" class="form-label">Device Status</label>
