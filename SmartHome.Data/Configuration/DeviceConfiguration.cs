@@ -23,7 +23,7 @@ namespace SmartHome.Data.Configuration
 
             builder.HasData(this.SeedDevices());
         }
-
+        
         private List<Device> SeedDevices()
         {
             List<Device> devices = new List<Device>()
@@ -31,14 +31,14 @@ namespace SmartHome.Data.Configuration
                  new Device
                  {
                      DeviceName = "Switch 1",
-                     Type = Types.Switch,
+                     Type = "Switch",
                      Status = false
                  },
 
                  new Device
                  {
                     DeviceName = "Switch 2",
-                    Type = Types.Switch,
+                    Type = "Switch",
                     Status = false
                  }
             };

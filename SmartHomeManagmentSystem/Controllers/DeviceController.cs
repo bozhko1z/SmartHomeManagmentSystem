@@ -17,12 +17,16 @@ namespace SmartHomeManagmentSystem.Controllers
     {
         private readonly SmartHomeDbContext dbContext;
         private IRepository<Device, Guid> deviceRepo;
-        private readonly Repository<Device, int> typesRepository;
-        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo, Repository<Device, int> typesRepository)
+        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo)
         {
             this.dbContext = dbContext;
             this.deviceRepo = deviceRepo;
-            this.typesRepository = typesRepository;
+        }
+
+        [HttpGet]
+        public IActionResult GetTypeOptions()
+        {
+            return Ok(Types.AllTypes.All);
         }
 
         [HttpGet]
@@ -55,7 +59,7 @@ namespace SmartHomeManagmentSystem.Controllers
             Device device = new Device()
             {
                 DeviceName = inputModel.DeviceName,
-                Type = inputModel.Type,
+                Type = inputModel.Type.ToString(),
                 Status = inputModel.Status,
             };
 

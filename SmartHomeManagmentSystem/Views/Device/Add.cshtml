@@ -18,7 +18,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Type" class="form-label">Device Type</label>
-                <select asp-for="Type" asp-items="ViewBag.DeviceTypes" class="form-select">
+                <select asp-for="Type.Id" asp-items="ViewBag.AllTypes" class="form-select">
                     <option value="" disabled selected>-- Select a Device Type --</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger"></span>

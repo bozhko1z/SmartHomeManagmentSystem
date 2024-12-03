@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace SmartHome.Data.Models.Enums
 {
-    public enum Types
+    public class Types
     {
-        Light = 0,
-        Switch = 1,
-        Thermostat = 2
+        public int Id { get; set; }
 
+        public string Name { get; set; } = null!;
+
+        public static class AllTypes
+        {
+            public static readonly List<Types> All = new List<Types>
+            {
+                new Types { Id = 1, Name = "Light"},
+                new Types { Id = 2, Name = "Switch"},
+                new Types { Id = 3, Name = "Thermostat"}
+            };
+        }
     }
 }
