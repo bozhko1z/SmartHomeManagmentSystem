@@ -55,31 +55,14 @@ namespace SmartHomeManagmentSystem.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            Room? room = await this.dbContext
-                .Rooms
-                .Include(r=>r.DevicesRooms)
-                .ThenInclude(d=>d.Device)
-                .FirstOrDefaultAsync(r => r.Id == roomId);
+            RoomDescriptionModel descriptionModel = await this.roomService.GetRoomDetailsAsync(roomId);
 
-            if (room == null)
+            if (descriptionModel == null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            RoomDescriptionModel viewModel = new RoomDescriptionModel()
-            {
-                RoomName = room.RoomName,
-                Devices = room.DevicesRooms
-                .Where(d => d.IsDeleted == false)
-                .Select(r => new RoomDeviceViewModel
-                {
-                    Name = r.Device.DeviceName,
-                    Type = r.Device.Type.ToString(),
-                    Status = r.Device.Status
-                })
-                .ToArray()
-            };
-            return View(viewModel);
+            return View(descriptionModel);
 
         }
     }

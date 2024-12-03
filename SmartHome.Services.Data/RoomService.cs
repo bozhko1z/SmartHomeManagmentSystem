@@ -3,6 +3,7 @@ using SmartHome.Data.Models;
 using SmartHome.Data.Repository.Interfaces;
 using SmartHome.Services.Data.Interfaces;
 using SmartHome.Services.Mapping;
+using SmartHome.Web.ViewModels.Device;
 using SmartHome.Web.ViewModels.Room;
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,34 @@ namespace SmartHome.Services.Data
             return rooms;
         }
 
-        public Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id)
+        public async Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Room? room = await this.roomRepository
+                .GetAllAttached()
+                .Include(r => r.DevicesRooms)
+                .ThenInclude(d => d.Device)
+                .FirstOrDefaultAsync(r => r.Id == id);
+            
+            RoomDescriptionModel viewModel = null;
+            
+            if (room != null)
+            {
+                viewModel = new RoomDescriptionModel()
+                {
+                    RoomName = room.RoomName,
+                    Devices = room.DevicesRooms
+                .Where(d => d.IsDeleted == false)
+                .Select(r => new RoomDeviceViewModel
+                {
+                    Name = r.Device.DeviceName,
+                    Type = r.Device.Type.ToString(),
+                    Status = r.Device.Status
+                })
+                .ToArray()
+                };
+            }
+
+            return viewModel;
         }
     }
 }
