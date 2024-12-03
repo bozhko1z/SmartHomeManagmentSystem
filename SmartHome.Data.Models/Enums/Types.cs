@@ -12,14 +12,17 @@ namespace SmartHome.Data.Models.Enums
 
         public string Name { get; set; } = null!;
 
-        public static class AllTypes
+        public Types(int id, string name)
         {
-            public static readonly List<Types> All = new List<Types>
-            {
-                new Types { Id = 1, Name = "Light"},
-                new Types { Id = 2, Name = "Switch"},
-                new Types { Id = 3, Name = "Thermostat"}
-            };
+            this.Id = id;
+            this.Name = name;
         }
+
+        public static readonly Types Switch = new Types(1, "Electronics");
+        public static readonly Types Light = new Types(2, "Light");
+        public static readonly Types Thermostat = new Types(3, "Thermostat");
+
+        public static List<Types> GetAll() => new List<Types> { Switch, Light, Thermostat };
     }
 }
+

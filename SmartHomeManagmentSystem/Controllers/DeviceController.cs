@@ -23,11 +23,7 @@ namespace SmartHomeManagmentSystem.Controllers
             this.deviceRepo = deviceRepo;
         }
 
-        [HttpGet]
-        public IActionResult GetTypeOptions()
-        {
-            return Ok(Types.AllTypes.All);
-        }
+        
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -42,7 +38,6 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            
             return View();
         }
 
@@ -54,12 +49,12 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-            
+            ViewBag.Types = new SelectList(Types.GetAll(), "Id", "Name");
 
             Device device = new Device()
             {
                 DeviceName = inputModel.DeviceName,
-                Type = inputModel.Type.ToString(),
+                Type = inputModel.TypeId.ToString(),
                 Status = inputModel.Status,
             };
 
