@@ -136,7 +136,7 @@ namespace SmartHomeManagmentSystem.Controllers
                 {
                     Id = r.Id.ToString(),
                     RoomName = r.RoomName,
-                    IsSelected = r.DevicesRooms.Any(dr => dr.Device.Id == devId)
+                    IsSelected = r.DevicesRooms.Any(dr => dr.Device.Id == devId && dr.IsDeleted == false)
                 })
                 .ToArrayAsync()
             };
