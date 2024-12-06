@@ -19,7 +19,7 @@ namespace SmartHome.Web.ViewModels.Device
         public string DeviceName { get; set; } = null!;
 
         [Required(ErrorMessage = DeviceTypeValidationMessage)]
-        public Types DeviceType { get; set; }
+        public string DeviceType { get; set; }
 
         [Required(ErrorMessage = DeviceStatusValidationMessage)]
         [DefaultValue(DeviceDefaultStatus)]

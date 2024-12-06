@@ -40,9 +40,9 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             var deviceTypes = new List<Types>
             {
-                new Types { Id = 1, Name = "Switch" },
-                new Types { Id = 2, Name = "Light" },
-                new Types { Id = 3, Name = "Thermostat" }
+                new Types { Id = "switch", Name = "Switch" },
+                new Types { Id = "light", Name = "Light" },
+                new Types { Id = "thermostat", Name = "Thermostat" }
             };
 
             var model = new AddDeviceInputModel
@@ -63,19 +63,19 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-            
+
             Device device = new Device()
             {
                 DeviceName = inputModel.DeviceName,
-                Type = inputModel.DeviceType.ToString(),
+                Type = inputModel.DeviceType,
                 Status = inputModel.Status,
             };
             //if validation fails
             var deviceTypes = new List<Types>
             {
-                new Types { Id = 1, Name = "Switch" },
-                new Types { Id = 2, Name = "Light" },
-                new Types { Id = 3, Name = "Thermostat" }
+                new Types { Id = "switch", Name = "Switch" },
+                new Types { Id = "light", Name = "Light" },
+                new Types { Id = "thermostat", Name = "Thermostat" }
             };
             ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
 

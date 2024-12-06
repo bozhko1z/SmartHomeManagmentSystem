@@ -12,8 +12,8 @@ using SmartHome.Data;
 namespace SmartHome.Data.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    [Migration("20241126155046_UserDeviceList")]
-    partial class UserDeviceList
+    [Migration("20241206135918_NewIdentity")]
+    partial class NewIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,7 +77,7 @@ namespace SmartHome.Data.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace SmartHome.Data.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -122,7 +122,7 @@ namespace SmartHome.Data.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -137,7 +137,7 @@ namespace SmartHome.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -230,16 +230,17 @@ namespace SmartHome.Data.Migrations
 
                     b.Property<string>("DeviceName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -248,17 +249,17 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("03845adf-21b9-4904-a8ea-dc9f835ddc14"),
+                            Id = new Guid("f42d8d61-141d-447f-8ba7-94217a957db7"),
                             DeviceName = "Switch 1",
                             Status = false,
-                            Type = 1
+                            Type = "Switch"
                         },
                         new
                         {
-                            Id = new Guid("b05a4d22-6ce5-4199-8d0c-074fa4f494b0"),
+                            Id = new Guid("370e9ca8-3a1f-4bad-854a-7225af8d79c7"),
                             DeviceName = "Switch 2",
                             Status = false,
-                            Type = 1
+                            Type = "Switch"
                         });
                 });
 
@@ -300,17 +301,17 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0e099bd5-8af6-4b9f-99b9-6ba76108ceff"),
+                            Id = new Guid("1c05bc75-035c-4035-a6a3-5a235b226da4"),
                             RoomName = "Kitchen"
                         },
                         new
                         {
-                            Id = new Guid("6f494a33-c1c0-477e-b92e-bfb765dea812"),
+                            Id = new Guid("b84f7766-1b94-4d24-a81b-18a5807cbdac"),
                             RoomName = "Living Room"
                         },
                         new
                         {
-                            Id = new Guid("d7681b6e-ce62-4ff1-bd58-53d965f0b52b"),
+                            Id = new Guid("095c3f87-b178-42c9-b3ca-8a53cc2a8ec5"),
                             RoomName = "Bathroom"
                         });
                 });
@@ -327,7 +328,7 @@ namespace SmartHome.Data.Migrations
 
                     b.HasIndex("DeviceId");
 
-                    b.ToTable("UserDevice");
+                    b.ToTable("UsersDevices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -339,7 +340,7 @@ namespace SmartHome.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("SmartHome.Data.Models.ApplicationUser", null)
                         .WithMany()
@@ -348,7 +349,7 @@ namespace SmartHome.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("SmartHome.Data.Models.ApplicationUser", null)
                         .WithMany()
@@ -357,7 +358,7 @@ namespace SmartHome.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
@@ -372,7 +373,7 @@ namespace SmartHome.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("SmartHome.Data.Models.ApplicationUser", null)
                         .WithMany()

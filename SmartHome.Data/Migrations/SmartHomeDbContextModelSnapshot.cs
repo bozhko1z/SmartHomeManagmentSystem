@@ -246,14 +246,14 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("32f0a7a9-7181-4843-a1d6-3f0981403b9f"),
+                            Id = new Guid("f42d8d61-141d-447f-8ba7-94217a957db7"),
                             DeviceName = "Switch 1",
                             Status = false,
                             Type = "Switch"
                         },
                         new
                         {
-                            Id = new Guid("b7e890c0-f15d-45d0-8684-b440a7dbf186"),
+                            Id = new Guid("370e9ca8-3a1f-4bad-854a-7225af8d79c7"),
                             DeviceName = "Switch 2",
                             Status = false,
                             Type = "Switch"
@@ -298,17 +298,17 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1ba2e4b8-7a76-4ebf-b9ea-0dafbd06c8ec"),
+                            Id = new Guid("1c05bc75-035c-4035-a6a3-5a235b226da4"),
                             RoomName = "Kitchen"
                         },
                         new
                         {
-                            Id = new Guid("b159f552-7db8-4638-b38b-b37754f52215"),
+                            Id = new Guid("b84f7766-1b94-4d24-a81b-18a5807cbdac"),
                             RoomName = "Living Room"
                         },
                         new
                         {
-                            Id = new Guid("d205237e-0820-45ce-acdf-8215c91d95bb"),
+                            Id = new Guid("095c3f87-b178-42c9-b3ca-8a53cc2a8ec5"),
                             RoomName = "Bathroom"
                         });
                 });

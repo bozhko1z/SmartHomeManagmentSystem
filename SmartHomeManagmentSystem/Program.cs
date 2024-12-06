@@ -25,6 +25,8 @@ namespace SmartHomeManagmentSystem
                 options.UseSqlServer(connectionString); 
             });
 
+            //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SmartHomeDbContext>();
+
             builder.Services
                 .AddIdentity<ApplicationUser, IdentityRole<Guid>>(cfg =>
                 {

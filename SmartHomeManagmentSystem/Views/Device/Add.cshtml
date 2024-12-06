@@ -10,18 +10,18 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Add New Device</h1>
-        <form asp-action="Add" method="post">
+        <form asp-action="Add" asp-controller="Device" method="post">
             <div class="mb-3">
                 <label for="DeviceName" class="form-label">Device Name</label>
                 <input type="text" class="form-control" id="DeviceName" name="DeviceName" required />
                 <span asp-validation-for="DeviceName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="DeviceType.Id" class="form-label">Device Type</label>
-                <select asp-for="DeviceType.Id" asp-items="ViewBag.DeviceTypes" class="form-select">
+                <label asp-for="DeviceType" class="form-label">Device Type</label>
+                <select asp-for="DeviceType" asp-items="ViewBag.DeviceTypes" class="form-select">
                     <option value="" disabled selected>-- Select a Device Type --</option>
                 </select>
-                <span asp-validation-for="DeviceType.Id" class="text-danger"></span>
+                <span asp-validation-for="DeviceType" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Status" class="form-label">Device Status</label>
