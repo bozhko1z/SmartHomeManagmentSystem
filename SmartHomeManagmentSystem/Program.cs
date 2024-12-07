@@ -42,13 +42,10 @@ namespace SmartHomeManagmentSystem
                 cfg.LoginPath = "/Identity/Account/Login";
             });
 
-            //builder.Services.AddScoped<IRepository<Device, Guid>, Repository<Device, Guid>>();
-            //builder.Services.AddScoped<IRepository<Room, Guid>, Repository<Room, Guid>>();
-            //builder.Services.AddScoped<IRepository<DeviceRoom, object>, Repository<DeviceRoom, object>>();
-            //builder.Services.AddScoped<IRepository<UserDevice, object>, Repository<UserDevice, object>>();
-
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.AddScoped<IRoomService, RoomService>();
+            builder.Services.AddServices(typeof(IDeviceService).Assembly);
+
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

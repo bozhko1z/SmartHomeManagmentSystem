@@ -10,11 +10,9 @@ namespace SmartHomeManagmentSystem.Controllers
 {
     public class RoomController : BaseController
     {
-        private readonly SmartHomeDbContext dbContext;
         private readonly IRoomService roomService;
-        public RoomController(SmartHomeDbContext dbContext, IRoomService roomService)
+        public RoomController(IRoomService roomService)
         {
-            this.dbContext = dbContext;
             this.roomService = roomService;
         }
         public async Task<IActionResult> Index()

@@ -50,5 +50,31 @@ namespace SmartHome.Web.Infrastructure.Extensions
                 }
             }
         }
+
+        public static void AddServices(this IServiceCollection serviceCollection, Assembly serviceAssembly)
+        {
+            Type[] interfaceTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => t.IsInterface)
+                .ToArray();
+
+            Type[] types = serviceAssembly
+                .GetTypes()
+                .Where(t => !t.IsInterface && !t.IsAbstract && t.Name.ToLower().EndsWith("service"))
+                .ToArray();
+
+            foreach (Type interfType in interfaceTypes)
+            {
+                Type? serType = types
+                    .SingleOrDefault(t => "i" + t.Name.ToLower() == interfType.Name.ToLower());
+
+                if (serType == null)
+                {
+                    throw new NullReferenceException($"Type could not be obtained for service {interfType.Name}");
+                }
+
+                serviceCollection.AddScoped(interfType, serType);
+            }
+        }
     }
 }
