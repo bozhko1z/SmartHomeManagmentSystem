@@ -46,15 +46,15 @@
                             </td>
                             <td>
                                 <!-- Actions -->
-                                <a href="/Device/Description/@device.Id" class="btn btn-sm btn-info">Description</a>
+                                <a href="/Device/Description/@device.Id" class="btn btn-outline-secondary">Description</a>
                                 @if (User?.Identity?.IsAuthenticated ?? false)
                                 {
-                                    <a href="/Device/AddToRoom/@device.Id" class="btn btn-sm btn-info">Add To Room</a>
-                                    @* <button class="btn btn-sm btn-primary">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button> *@
+                                    <a href="/Device/AddToRoom/@device.Id" class="btn btn-outline-info">Add To Room</a>
+                                    <button class="btn btn-outline-primary">Edit</button>
+                                    <button class="btn btn-outline-danger">Delete</button>
                                     <form asp-controller="DeviceWatchList" asp-action="AddToWatchList" method="post" class="d-inline">
                                         <input type="hidden" name="deviceId" value="@device.Id" />
-                                        <button type="submit" class="btn btn-warning">+WatchList</button>
+                                        <button type="submit" class="btn btn-outline-info">Add to Watchlist</button>
                                     </form>
                                 }
                             </td>
