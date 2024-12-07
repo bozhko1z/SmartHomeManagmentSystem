@@ -10,17 +10,18 @@ using Device = SmartHome.Data.Models.Device;
 using SmartHome.Web.ViewModels.Room;
 using SmartHome.Data.Repository.Interfaces;
 using SmartHome.Data.Repository;
+using SmartHome.Services.Data.Interfaces;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
     public class DeviceController : BaseController
     {
         private readonly SmartHomeDbContext dbContext;
-        private IRepository<Device, Guid> deviceRepo;
-        public DeviceController(SmartHomeDbContext dbContext, IRepository<Device, Guid> deviceRepo)
+        private readonly IDeviceService deviceService;
+        public DeviceController(SmartHomeDbContext dbContext, IDeviceService deviceService)
         {
             this.dbContext = dbContext;
-            this.deviceRepo = deviceRepo;
+            this.deviceService = deviceService;
         }
 
         
@@ -28,9 +29,7 @@ namespace SmartHomeManagmentSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Device> allDevices = await this.dbContext
-                .Devices
-                .ToArrayAsync();
+            IEnumerable<AllDevicesViewModel> allDevices = await this.deviceService.GetAllDevicesAsync();
 
             return View(allDevices);
         }
@@ -40,9 +39,9 @@ namespace SmartHomeManagmentSystem.Controllers
         {
             var deviceTypes = new List<Types>
             {
-                new Types { Id = "switch", Name = "Switch" },
-                new Types { Id = "light", Name = "Light" },
-                new Types { Id = "thermostat", Name = "Thermostat" }
+                new Types { Id = "Switch", Name = "Switch" },
+                new Types { Id = "Light", Name = "Light" },
+                new Types { Id = "Thermostat", Name = "Thermostat" }
             };
 
             var model = new AddDeviceInputModel
@@ -73,13 +72,13 @@ namespace SmartHomeManagmentSystem.Controllers
             //if validation fails
             var deviceTypes = new List<Types>
             {
-                new Types { Id = "switch", Name = "Switch" },
-                new Types { Id = "light", Name = "Light" },
-                new Types { Id = "thermostat", Name = "Thermostat" }
+                new Types { Id = "Switch", Name = "Switch" },
+                new Types { Id = "Light", Name = "Light" },
+                new Types { Id = "Thermostat", Name = "Thermostat" }
             };
             ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
 
-            await deviceRepo.AddAysnc(device);
+            await dbContext.AddAsync(device);
             return RedirectToAction(nameof(Index));
         }
 

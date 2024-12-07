@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SmartHome.Data.Models.Device>
+﻿@using SmartHome.Web.ViewModels.Device
+@model IEnumerable<AllDevicesViewModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@
             <tbody>
                 @if (Model != null && Model.Any())
                 {
-                    foreach (var device in Model)
+                    foreach (AllDevicesViewModel device in Model)
                     {
                         <tr>
                             <td>@device.DeviceName</td>
