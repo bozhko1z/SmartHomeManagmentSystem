@@ -68,5 +68,34 @@ namespace SmartHome.Services.Data
 
             return viewModel;
         }
+
+        public async Task<EditRoomViewModel> GetRoomEditByIdAsync(Guid id)
+        {
+            var room = await this.roomRepository
+                .GetAllAttached()
+                .Where(r => r.Id == id)
+                .Select(r => new EditRoomViewModel
+                {
+                    RoomName = r.RoomName
+                })
+                .FirstOrDefaultAsync();
+            return room;
+        }
+
+        public async Task<bool> UpdateRoomAsync(EditRoomViewModel model)
+        {
+            Room? room = await this.roomRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(r => r.Id.ToString() == model.Id);
+
+            if (room == null)
+            {
+                return false;
+            }
+
+            room.RoomName = model.RoomName;
+            await this.roomRepository.UpdateAysnc(room);
+            return true;
+        }
     }
 }

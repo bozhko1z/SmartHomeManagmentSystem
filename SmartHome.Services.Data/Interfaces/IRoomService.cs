@@ -14,5 +14,9 @@ namespace SmartHome.Services.Data.Interfaces
         Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id);
 
         Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync();
+
+        Task<EditRoomViewModel> GetRoomEditByIdAsync(Guid id);
+
+        Task<bool> UpdateRoomAsync(EditRoomViewModel model);
     }
 }
