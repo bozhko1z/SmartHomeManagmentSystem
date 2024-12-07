@@ -63,12 +63,6 @@ namespace SmartHomeManagmentSystem.Controllers
                 return View(inputModel);
             }
 
-            Device device = new Device()
-            {
-                DeviceName = inputModel.DeviceName,
-                Type = inputModel.DeviceType,
-                Status = inputModel.Status,
-            };
             //if validation fails
             var deviceTypes = new List<Types>
             {
@@ -77,9 +71,9 @@ namespace SmartHomeManagmentSystem.Controllers
                 new Types { Id = "Thermostat", Name = "Thermostat" }
             };
             ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
+            await this.deviceService.AddDeviceAsync(inputModel);
 
-            await dbContext.AddAsync(device);
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

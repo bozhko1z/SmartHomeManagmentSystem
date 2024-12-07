@@ -10,5 +10,7 @@ namespace SmartHome.Services.Data.Interfaces
     public interface IDeviceService
     {
         Task<IEnumerable<AllDevicesViewModel>> GetAllDevicesAsync();
+
+        Task AddDeviceAsync(AddDeviceInputModel inputModel);
     }
 }

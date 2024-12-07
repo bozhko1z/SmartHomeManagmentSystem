@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using static SmartHome.Commons.ValidationConstants.Device;
 using static SmartHome.Commons.EntityValidationMessages.Device;
+using SmartHome.Services.Mapping;
 
 namespace SmartHome.Web.ViewModels.Device
 {
-    public class AddDeviceInputModel
+    using Data.Models;
+    public class AddDeviceInputModel : IMapTo<Device>
     {
         [Required(ErrorMessage = DeviceNameValidationMessage)]
         [MaxLength(DeviceMaxName)]

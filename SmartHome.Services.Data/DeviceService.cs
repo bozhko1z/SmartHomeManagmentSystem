@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartHome.Data.Models;
+using SmartHome.Data.Models.Enums;
 using SmartHome.Data.Repository.Interfaces;
 using SmartHome.Services.Data.Interfaces;
 using SmartHome.Services.Mapping;
@@ -19,6 +20,16 @@ namespace SmartHome.Services.Data
         public DeviceService(IRepository<Device, Guid> devRepository)
         {
             this.devRepository = devRepository;
+        }
+
+        public async Task AddDeviceAsync(AddDeviceInputModel inputModel)
+        {
+            Device device = new Device();
+            AutoMapperConfig.MapperInstance.Map(inputModel, device);
+            
+
+            await dbContext.AddAsync(device);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IEnumerable<AllDevicesViewModel>> GetAllDevicesAsync()
