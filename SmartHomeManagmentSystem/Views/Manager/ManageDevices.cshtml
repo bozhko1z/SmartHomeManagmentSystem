@@ -1,0 +1,44 @@
+﻿@using SmartHome.Web.ViewModels.Device
+@model IEnumerable<AllDevicesViewModel>
+
+@{
+    ViewData["Title"] = "Manage Devices";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Manage Devices</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var device in Model)
+                {
+                    <tr>
+                        <td>@device.DeviceName</td>
+                        <td>@device.Type</td>
+                        <td>@(device.Status ? "On" : "Off")</td>
+                        <td>
+                            <a asp-action="EditDevice" asp-route-id="@device.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="DeleteDevice" asp-route-id="@device.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No devices found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

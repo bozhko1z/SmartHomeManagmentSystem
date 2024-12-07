@@ -33,8 +33,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Room" asp-action="Index">Rooms</a>
                         </li>
+                        
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Manager
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                                    <li><a class="dropdown-item" href="/Device/Add">Add Device</a></li>
+                                    <li><a class="dropdown-item" href="/Room/Add">Add Room</a></li>
+                                    <li><a class="dropdown-item" href="/Manager/ManageDevices">Manage Devices</a></li>
+                                    <li><a class="dropdown-item" href="/Manager/ManageRoom">Manage Rooms</a></li>
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="DeviceWatchList" asp-action="Index">Device Watchlist</a>
                             </li>

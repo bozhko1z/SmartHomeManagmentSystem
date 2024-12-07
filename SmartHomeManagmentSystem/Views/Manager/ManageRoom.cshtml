@@ -1,0 +1,43 @@
+﻿@using SmartHome.Web.ViewModels.Room
+@model IEnumerable<RoomIndexViewModel>
+
+@{
+    ViewData["Title"] = "Manage Rooms";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Manage Rooms</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-secondary">
+            <tr>
+                <th>Room Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var room in Model)
+                {
+                    <tr>
+                        <td>@room.RoomName</td>
+                        <td>
+                            <a href="/Room/Description/@room.Id" class="btn btn-sm btn-info">Details</a>
+                            <a asp-action="EditRoom" asp-route-id="@room.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="DeleteRoom" asp-route-id="@room.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center">No rooms found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="AddRoom" class="btn btn-primary">Add New Room</a>
+</div>
