@@ -86,8 +86,8 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            Device? device = await dbContext.Devices
-                .FirstOrDefaultAsync(d => d.Id == guidId);
+            DeviceDescriptionViewModel device = await this.deviceService
+                .DeviceDescriptionByIdAsync(guidId);
 
             if (device == null)
             {

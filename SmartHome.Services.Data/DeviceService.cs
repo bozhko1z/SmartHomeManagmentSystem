@@ -26,10 +26,20 @@ namespace SmartHome.Services.Data
         {
             Device device = new Device();
             AutoMapperConfig.MapperInstance.Map(inputModel, device);
-            
 
-            await dbContext.AddAsync(device);
-            return RedirectToAction(nameof(Index));
+
+            await this.devRepository.AddAysnc(device);
+        }
+
+        public async Task<DeviceDescriptionViewModel> DeviceDescriptionByIdAsync(Guid id)
+        {
+            Device? device = await devRepository.GetByIdAsync(id);
+            DeviceDescriptionViewModel descriptionViewModel = new DeviceDescriptionViewModel();
+            if (device != null)
+            {
+                AutoMapperConfig.MapperInstance.Map(device, descriptionViewModel);
+            }
+            return descriptionViewModel;
         }
 
         public async Task<IEnumerable<AllDevicesViewModel>> GetAllDevicesAsync()
