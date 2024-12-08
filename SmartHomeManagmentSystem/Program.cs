@@ -10,6 +10,7 @@ using SmartHome.Web.Infrastructure.Extensions;
 using SmartHome.Web.ViewModels;
 using SmartHome.Services.Data.Interfaces;
 using SmartHome.Services.Data;
+using SmartHome.Data.Configuration;
 namespace SmartHomeManagmentSystem
 {
     public class Program
@@ -52,7 +53,13 @@ namespace SmartHomeManagmentSystem
 
             WebApplication app = builder.Build();
 
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                DbSeeder.SeedRoles(services);
+            }
+
+                AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -71,9 +78,14 @@ namespace SmartHomeManagmentSystem
             app.UseAuthorization();
 
             app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
             app.ApplyMigrations();
             app.Run();
@@ -94,5 +106,7 @@ namespace SmartHomeManagmentSystem
 
             cfg.User.RequireUniqueEmail = builder.Configuration.GetValue<bool>("Identity:User:RequireUniqueEmail");
         }
+
+        
     }
 }

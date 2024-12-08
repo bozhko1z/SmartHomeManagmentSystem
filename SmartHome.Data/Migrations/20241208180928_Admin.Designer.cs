@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartHome.Data;
 
@@ -11,9 +12,11 @@ using SmartHome.Data;
 namespace SmartHome.Data.Migrations
 {
     [DbContext(typeof(SmartHomeDbContext))]
-    partial class SmartHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241208180928_Admin")]
+    partial class Admin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,14 +249,14 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("18a1522c-ad7a-4c17-ad3c-94ae4da4f61b"),
+                            Id = new Guid("04dc3319-e4da-4b35-ad03-3c71670eaa34"),
                             DeviceName = "Switch 1",
                             Status = false,
                             Type = "Switch"
                         },
                         new
                         {
-                            Id = new Guid("ffb6352f-4901-416e-8690-f3ade111ff9d"),
+                            Id = new Guid("012246d0-1735-4f72-a43f-843cff8e8f65"),
                             DeviceName = "Switch 2",
                             Status = false,
                             Type = "Switch"
@@ -298,17 +301,17 @@ namespace SmartHome.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a3a27f4b-81fa-4202-a037-c8faa20025a5"),
+                            Id = new Guid("61b25703-ec13-4da1-8893-7975e0dbd90e"),
                             RoomName = "Kitchen"
                         },
                         new
                         {
-                            Id = new Guid("fe2d1abf-f5d6-40d3-8a86-4adf4e215274"),
+                            Id = new Guid("6ac5409e-9c57-42c3-8518-11b73c5e85f0"),
                             RoomName = "Living Room"
                         },
                         new
                         {
-                            Id = new Guid("a05d1006-2cb3-4c84-b219-c7f8bec55dfb"),
+                            Id = new Guid("b4415c00-72c7-4005-ade3-769864577444"),
                             RoomName = "Bathroom"
                         });
                 });

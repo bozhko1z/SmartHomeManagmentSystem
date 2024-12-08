@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartHome.Data;
 using SmartHome.Services.Data.Interfaces;
 using SmartHome.Web.ViewModels.Device;
@@ -6,6 +7,7 @@ using SmartHome.Web.ViewModels.Room;
 
 namespace SmartHomeManagmentSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ManagerController : BaseController
     {
         private readonly IRoomService roomService;

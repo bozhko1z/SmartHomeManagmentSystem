@@ -1,4 +1,8 @@
 ﻿@using static SmartHome.Commons.ApplicationConstants
+@using Microsoft.AspNetCore.Identity
+@using SmartHome.Data.Models
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     int currentY = DateTime.UtcNow.Year;
     string footerNote = (ReleaseYear == currentY) ? $"{currentY}" : $"{ReleaseYear} - {currentY}";
@@ -36,17 +40,27 @@
                         
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Manager
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="managerDropdown">
-                                    <li><a class="dropdown-item" href="/Device/Add">Add Device</a></li>
-                                    <li><a class="dropdown-item" href="/Room/Add">Add Room</a></li>
-                                    <li><a class="dropdown-item" href="/Manager/ManageDevices">Manage Devices</a></li>
-                                    <li><a class="dropdown-item" href="/Manager/ManageRoom">Manage Rooms</a></li>
-                                </ul>
-                            </li>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                var user = UserManager.GetUserAsync(User).Result;
+                                var isAdmin = UserManager.IsInRoleAsync(user, "Admin").Result;
+
+                                @if(isAdmin)
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="managerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Manager
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="managerDropdown">
+                                            <li><a class="dropdown-item" href="/Device/Add">Add Device</a></li>
+                                            <li><a class="dropdown-item" href="/Room/Add">Add Room</a></li>
+                                            <li><a class="dropdown-item" href="/Manager/ManageDevices">Manage Devices</a></li>
+                                            <li><a class="dropdown-item" href="/Manager/ManageRoom">Manage Rooms</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="DeviceWatchList" asp-action="Index">Device Watchlist</a>
                             </li>
