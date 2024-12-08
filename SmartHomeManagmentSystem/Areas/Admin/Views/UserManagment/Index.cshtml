@@ -1,0 +1,28 @@
+﻿@model IEnumerable<SmartHomeManagmentSystem.Areas.Admin.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h1>User Management</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    <a href="@Url.Action("EditRoles", new { id = user.Id })" class="btn btn-warning">Edit Roles</a>
+                    <a href="@Url.Action("Delete", new { id = user.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
