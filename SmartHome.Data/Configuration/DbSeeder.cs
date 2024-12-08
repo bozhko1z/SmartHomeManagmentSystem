@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using SmartHome.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,14 @@ namespace SmartHome.Data.Configuration
                     }
                 }
             }
+        }
+
+        public static void AssignAdminRole(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            string adminEmail = "adminBojko@abv.bg";
+            string adminPassword = "admin123";
         }
     }
 }

@@ -57,6 +57,7 @@ namespace SmartHomeManagmentSystem
             {
                 var services = scope.ServiceProvider;
                 DbSeeder.SeedRoles(services);
+                DbSeeder.AssignAdminRole(services);
             }
 
                 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
