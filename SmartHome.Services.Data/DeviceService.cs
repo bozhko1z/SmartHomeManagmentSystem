@@ -30,6 +30,23 @@ namespace SmartHome.Services.Data
 
             await this.devRepository.AddAysnc(device);
         }
+        public async Task<bool> EditDeviceAsync(EditDeviceViewModel model)
+        {
+            Device? device = await this.devRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(d => d.Id.ToString() == model.Id);
+
+            if (device == null)
+            {
+                return false;
+            }
+
+            device.DeviceName = model.DeviceName;
+            device.Type = model.DeviceType;
+            device.Status = model.Status;
+            await this.devRepository.UpdateAysnc(device);
+            return true;
+        }
 
         public async Task<DeviceDescriptionViewModel> DeviceDescriptionByIdAsync(Guid id)
         {
@@ -49,5 +66,22 @@ namespace SmartHome.Services.Data
                 .To<AllDevicesViewModel>()
                 .ToArrayAsync();
         }
+
+        public async Task<EditDeviceViewModel> GetDeviceEditById(Guid id)
+        {
+            var device = await this.devRepository
+                .GetAllAttached()
+                .Where(d => d.Id == id)
+                .Select(d => new EditDeviceViewModel
+                {
+                    DeviceName = d.DeviceName,
+                    DeviceType = d.Type,
+                    Status = d.Status,
+                })
+                .FirstOrDefaultAsync();
+            return device;
+        }
+
+
     }
 }

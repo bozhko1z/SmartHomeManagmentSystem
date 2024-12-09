@@ -29,7 +29,20 @@ namespace SmartHome.Services.Data
             await this.roomRepository.AddAysnc(room);
         }
 
-        
+        public async Task<bool> DeleteRoomAsync(DeleteRoomViewModel model)
+        {
+            Room? room = await this.roomRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(r => r.Id.ToString() == model.Id);
+
+            if (room != null)
+            {
+                room.RoomName = model.RoomName;
+                await this.roomRepository.DeleteAsync(room.Id);
+            }
+
+            return true;
+        }
 
         public async Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync()
         {
@@ -52,19 +65,6 @@ namespace SmartHome.Services.Data
                 })
                 .FirstOrDefaultAsync();
             return room;
-        }
-        public async Task<bool> DeleteRoomAsync(Guid id)
-        {
-            Room? room = await this.roomRepository
-                .GetAllAttached()
-                .FirstOrDefaultAsync(r => r.Id.ToString() == id.ToString());
-
-            if (room != null)
-            {
-                await this.roomRepository.DeleteAsync(room.Id);
-            }
-            
-            return true;
         }
 
         public async Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id)

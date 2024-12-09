@@ -215,9 +215,42 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = new EditDeviceViewModel
+            {
 
+            };
+            var deviceTypes = new List<Types>
+            {
+                new Types { Id = "Switch", Name = "Switch" },
+                new Types { Id = "Light", Name = "Light" },
+                new Types { Id = "Thermostat", Name = "Thermostat" }
+            };
 
+            ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
+            return View(model);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditDeviceViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var deviceTypes = new List<Types>
+            {
+                new Types { Id = "Switch", Name = "Switch" },
+                new Types { Id = "Light", Name = "Light" },
+                new Types { Id = "Thermostat", Name = "Thermostat" }
+            };
+
+            ViewBag.DeviceTypes = new SelectList(deviceTypes, "Id", "Name");
+            await this.deviceService.EditDeviceAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

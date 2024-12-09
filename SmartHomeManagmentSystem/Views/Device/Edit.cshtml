@@ -1,0 +1,43 @@
+﻿@using SmartHome.Web.ViewModels.Device
+@model EditDeviceViewModel
+
+@{
+    ViewData["Title"] = "Edit Device";
+}
+
+<h1>Edit Device</h1>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="DeviceName" class="control-label"></label>
+        <input asp-for="DeviceName" class="form-control" />
+        <span asp-validation-for="DeviceName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeviceType" class="form-label">Device Type</label>
+        <select asp-for="DeviceType" asp-items="ViewBag.DeviceTypes" class="form-select">
+            <option value="" disabled selected>-- Select a Device Type --</option>
+        </select>
+        <span asp-validation-for="DeviceType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="Status" class="form-label">Device Status</label>
+        <select class="form-select" id="Status" name="Status" required>
+            <option value="true">On</option>
+            <option value="false">Off</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -93,7 +93,7 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteModel(Guid model)
+        public async Task<IActionResult> DeleteModel(DeleteRoomViewModel model)
         {
             if (!ModelState.IsValid)
             {

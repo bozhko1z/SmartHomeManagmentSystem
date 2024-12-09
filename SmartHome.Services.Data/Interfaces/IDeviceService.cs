@@ -14,5 +14,9 @@ namespace SmartHome.Services.Data.Interfaces
         Task AddDeviceAsync(AddDeviceInputModel inputModel);
 
         Task<DeviceDescriptionViewModel> DeviceDescriptionByIdAsync(Guid id);
+
+        Task<EditDeviceViewModel> GetDeviceEditById(Guid id);
+
+        Task<bool> EditDeviceAsync(EditDeviceViewModel model);
     }
 }
