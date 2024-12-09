@@ -29,20 +29,7 @@ namespace SmartHome.Services.Data
             await this.roomRepository.AddAysnc(room);
         }
 
-        public async Task<bool> DeleteRoomAsync(DeleteRoomViewModel model)
-        {
-            Room? room = await this.roomRepository
-                .GetAllAttached()
-                .FirstOrDefaultAsync(r => r.Id.ToString() == model.Id);
-
-            if (room != null)
-            {
-                room.RoomName = model.RoomName;
-                await this.roomRepository.DeleteAsync(room.Id);
-            }
-
-            return true;
-        }
+        
 
         public async Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync()
         {
@@ -54,18 +41,7 @@ namespace SmartHome.Services.Data
             return rooms;
         }
 
-        public async Task<DeleteRoomViewModel> GetRoomDeleteById(Guid id)
-        {
-            var room = await this.roomRepository
-                .GetAllAttached()
-                .Where(r => r.Id == id)
-                .Select(r => new DeleteRoomViewModel
-                {
-                    RoomName = r.RoomName
-                })
-                .FirstOrDefaultAsync();
-            return room;
-        }
+       
 
         public async Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id)
         {
@@ -108,6 +84,29 @@ namespace SmartHome.Services.Data
                 })
                 .FirstOrDefaultAsync();
             return room;
+        }
+
+        public async Task<bool> SoftDeleteRoomAsync(Guid id)
+        {
+            var room = await this.roomRepository
+                .GetAllAttached()
+                .Include(r => r.DevicesRooms)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (room == null)
+            {
+                return false;
+            }
+
+            bool hasActiveRooms = room.DevicesRooms.Any(dr => !dr.IsDeleted);
+            if (hasActiveRooms)
+            {
+                return false;
+            }
+            room.IsDeleted = true;
+            await this.roomRepository.UpdateAysnc(room);
+
+            return true;
         }
 
         public async Task<bool> UpdateRoomAsync(EditRoomViewModel model)

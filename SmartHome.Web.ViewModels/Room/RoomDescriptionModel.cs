@@ -9,6 +9,7 @@ namespace SmartHome.Web.ViewModels.Room
 {
     public class RoomDescriptionModel
     {
+        public Guid Id { get; set; }
         public string RoomName { get; set; } = null!;
 
         public IEnumerable<RoomDeviceViewModel> Devices { get; set; } = new HashSet<RoomDeviceViewModel>();

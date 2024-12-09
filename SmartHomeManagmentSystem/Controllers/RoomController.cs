@@ -85,21 +85,37 @@ namespace SmartHomeManagmentSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> SoftDelete(string id)
         {
-            var model = await this.roomService
-                .GetRoomDeleteById(id);
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var roomGuid))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            RoomDescriptionModel model = await this.roomService.GetRoomDetailsAsync(roomGuid);
+
+            if (model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(model);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteModel(DeleteRoomViewModel model)
+        [HttpPost, ActionName("SoftDelete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SoftDeleteConfirmed(string id)
         {
-            if (!ModelState.IsValid)
+            if (!Guid.TryParse(id, out var guidId))
             {
-                return View(model);
+                return RedirectToAction(nameof(Index));
             }
-            await this.roomService.DeleteRoomAsync(model);
+            bool isSoftDeleted = await this.roomService.SoftDeleteRoomAsync(guidId);
+
+            if (!isSoftDeleted)
+            {
+                TempData["Error Message"] = "Unable to delete room!";
+                return RedirectToAction(nameof(Index), new { id = id });
+            }
             return RedirectToAction(nameof(Index));
         }
     }
