@@ -83,5 +83,24 @@ namespace SmartHomeManagmentSystem.Controllers
             await this.roomService.UpdateRoomAsync(model);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var model = await this.roomService
+                .GetRoomDeleteById(id);
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteModel(Guid model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await this.roomService.DeleteRoomAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

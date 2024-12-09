@@ -18,5 +18,9 @@ namespace SmartHome.Services.Data.Interfaces
         Task<EditRoomViewModel> GetRoomEditByIdAsync(Guid id);
 
         Task<bool> UpdateRoomAsync(EditRoomViewModel model);
+
+        Task<DeleteRoomViewModel> GetRoomDeleteById(Guid id);
+
+        Task<bool> DeleteRoomAsync(Guid id);
     }
 }

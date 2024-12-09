@@ -29,6 +29,8 @@ namespace SmartHome.Services.Data
             await this.roomRepository.AddAysnc(room);
         }
 
+        
+
         public async Task<IEnumerable<RoomIndexViewModel>> GetAllRoomsAsync()
         {
             IEnumerable<RoomIndexViewModel> rooms = await this.roomRepository
@@ -37,6 +39,32 @@ namespace SmartHome.Services.Data
                .ToArrayAsync();
 
             return rooms;
+        }
+
+        public async Task<DeleteRoomViewModel> GetRoomDeleteById(Guid id)
+        {
+            var room = await this.roomRepository
+                .GetAllAttached()
+                .Where(r => r.Id == id)
+                .Select(r => new DeleteRoomViewModel
+                {
+                    RoomName = r.RoomName
+                })
+                .FirstOrDefaultAsync();
+            return room;
+        }
+        public async Task<bool> DeleteRoomAsync(Guid id)
+        {
+            Room? room = await this.roomRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(r => r.Id.ToString() == id.ToString());
+
+            if (room != null)
+            {
+                await this.roomRepository.DeleteAsync(room.Id);
+            }
+            
+            return true;
         }
 
         public async Task<RoomDescriptionModel> GetRoomDetailsAsync(Guid id)
