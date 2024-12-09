@@ -59,14 +59,12 @@ namespace SmartHome.Services.Data
                 {
                     RoomName = room.RoomName,
                     Devices = room.DevicesRooms
-                .Where(d => d.IsDeleted == false)
-                .Select(r => new RoomDeviceViewModel
-                {
-                    Name = r.Device.DeviceName,
-                    Type = r.Device.Type.ToString(),
-                    Status = r.Device.Status
-                })
-                .ToArray()
+                    .Where(r => r.IsDeleted == false)
+                    .Select(r => new RoomDeviceViewModel()
+                    {
+                        Name = r.Room.RoomName
+                    })
+                    .ToArray()
                 };
             }
 
