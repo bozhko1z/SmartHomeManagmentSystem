@@ -96,7 +96,7 @@ namespace SmartHomeManagmentSystem
             app.SeedAdministartor(adminEmail, adminPassword);
 
             app.MapControllerRoute(
-                name: "areas",
+                name: "Areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
