@@ -24,8 +24,8 @@
                         <td>@room.RoomName</td>
                         <td>
                             <a href="/Room/Description/@room.Id" class="btn btn-sm btn-info">Details</a>
-                            <a asp-action="EditRoom" asp-route-id="@room.Id" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="DeleteRoom" asp-route-id="@room.Id" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="/Room/Edit/@room.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="/Room/Delete/@room.Id" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

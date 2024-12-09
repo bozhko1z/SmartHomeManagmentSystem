@@ -63,5 +63,25 @@ namespace SmartHomeManagmentSystem.Controllers
             return View(descriptionModel);
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = await this.roomService
+                .GetRoomEditByIdAsync(id);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditRoomViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await this.roomService.UpdateRoomAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
