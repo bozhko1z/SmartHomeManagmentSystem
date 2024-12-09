@@ -257,14 +257,21 @@ namespace SmartHomeManagmentSystem.Controllers
 
 
         [HttpGet]
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            var model = await this.deviceService
+                .DeviceDeleteByIdAsync(id);
+            return View(model);
         }
 
-        [HttpPost]
-        public IActionResult Delete(string id)
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteModel(DeleteDeviceModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await this.deviceService.DeleteDeviceAsync(model);
             return RedirectToAction(nameof(Index));
         }
     }

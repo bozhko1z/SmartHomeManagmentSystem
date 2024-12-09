@@ -5,6 +5,7 @@ using SmartHome.Data.Repository.Interfaces;
 using SmartHome.Services.Data.Interfaces;
 using SmartHome.Services.Mapping;
 using SmartHome.Web.ViewModels.Device;
+using SmartHome.Web.ViewModels.Room;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,6 +83,36 @@ namespace SmartHome.Services.Data
             return device;
         }
 
+        public async Task<DeleteDeviceModel> DeviceDeleteByIdAsync(Guid id)
+        {
+            var device = await this.devRepository
+                .GetAllAttached()
+                .Where(r => r.Id == id)
+                .Select(r => new DeleteDeviceModel
+                {
+                    DeviceName = r.DeviceName,
+                    DeviceType = r.Type,
+                    Status = r.Status,
+                })
+                .FirstOrDefaultAsync();
+            return device;
+        }
 
+        public async Task<bool> DeleteDeviceAsync(DeleteDeviceModel model)
+        {
+            Device? device = await this.devRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(r => r.Id.ToString() == model.Id);
+
+            if (device != null)
+            {
+                device.DeviceName = model.DeviceName;
+                device.Type = model.DeviceType;
+                device.Status = model.Status;
+                await this.devRepository.DeleteAsync(device.Id);
+            }
+
+            return true;
+        }
     }
 }

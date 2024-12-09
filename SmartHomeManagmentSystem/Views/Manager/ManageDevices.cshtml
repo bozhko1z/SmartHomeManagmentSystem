@@ -28,7 +28,7 @@
                         <td>@(device.Status ? "On" : "Off")</td>
                         <td>
                             <a href="/Device/Edit/@device.Id" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-action="DeleteDevice" asp-route-id="@device.Id" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="/Device/Delete/@device.Id" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

@@ -1,0 +1,29 @@
+﻿@using SmartHome.Web.ViewModels.Device
+@model DeleteDeviceModel
+
+@{
+    ViewData["Title"] = "Delete Device";
+}
+
+<h1>Delete Device</h1>
+
+<div>
+    <h4>Are you sure you want to delete this device?</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.DeviceName</dd>
+
+        <dt class="col-sm-2">Type</dt>
+        <dd class="col-sm-10">@Model.DeviceType</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">@(@Model.Status ? "On" : "Off")</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

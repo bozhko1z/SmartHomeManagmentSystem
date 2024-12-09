@@ -64,13 +64,12 @@ namespace SmartHome.Data.Repository
         {
             TType entity = await GetByIdAsync(id);
 
-            if (entity == null)
+            if (entity != null)
             {
-                return false;
+                dbSet.Remove(entity);
+                await dBcontext.SaveChangesAsync();
             }
-            dbSet.Remove(entity);
-            await dBcontext.SaveChangesAsync();
-
+            
             return true;
         }
 
