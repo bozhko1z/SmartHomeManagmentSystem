@@ -18,7 +18,9 @@ namespace SmartHomeManagmentSystem
         public static void Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            string connectionString = builder.Configuration.GetConnectionString("SqlServer");
+            string connectionString = builder.Configuration.GetConnectionString("SqlServer")!;
+            string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email")!;
+            string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password")!;
 
             // Add services to the container.
             builder.Services.AddDbContext<SmartHomeDbContext>(options =>
@@ -46,7 +48,6 @@ namespace SmartHomeManagmentSystem
             builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
             builder.Services.AddScoped<IRoomService, RoomService>();
             builder.Services.AddServices(typeof(IDeviceService).Assembly);
-
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -91,6 +92,8 @@ namespace SmartHomeManagmentSystem
             });
 
             app.UseAuthorization();
+
+            app.SeedAdministartor(adminEmail, adminPassword);
 
             app.MapControllerRoute(
                 name: "areas",
