@@ -17,18 +17,12 @@ namespace SmartHomeManagmentSystem.Controllers
         public IActionResult Index()
         {
             ViewBag.Message = "Welcome to the world of Smart Devices";
-            return View();
+            return StatusCode(500);
         }
 
-        [Route("Home/TriggerError")]
         public IActionResult TriggerError()
         {
-            throw new Exception("for 500");
-        }
-
-        public IActionResult CheckEnvironment()
-        {
-            return Content($"Environment: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+            return StatusCode(500);
         }
 
     }

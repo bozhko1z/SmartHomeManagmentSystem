@@ -17,11 +17,5 @@ namespace SmartHomeManagmentSystem.Controllers
                     return View("GenericError");
             }
         }
-
-        [Route("Error/500")]
-        public IActionResult HandleServerError()
-        {
-            return View("500");
-        }
     }
 }
