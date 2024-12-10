@@ -17,7 +17,7 @@ namespace SmartHomeManagmentSystem.Controllers
         public IActionResult Index()
         {
             ViewBag.Message = "Welcome to the world of Smart Devices";
-            return StatusCode(500);
+            return View();
         }
 
         public IActionResult TriggerError()
