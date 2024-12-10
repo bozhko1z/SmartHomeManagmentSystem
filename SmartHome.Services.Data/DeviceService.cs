@@ -83,34 +83,26 @@ namespace SmartHome.Services.Data
             return device;
         }
 
-        public async Task<DeleteDeviceModel> DeviceDeleteByIdAsync(Guid id)
+        public async Task<bool> SoftDeleteDeviceAsync(Guid id)
         {
             var device = await this.devRepository
                 .GetAllAttached()
-                .Where(r => r.Id == id)
-                .Select(r => new DeleteDeviceModel
-                {
-                    DeviceName = r.DeviceName,
-                    DeviceType = r.Type,
-                    Status = r.Status,
-                })
-                .FirstOrDefaultAsync();
-            return device;
-        }
+                .Include(d => d.DevicesRooms)
+                .FirstOrDefaultAsync(d => d.Id == id);
 
-        public async Task<bool> DeleteDeviceAsync(DeleteDeviceModel model)
-        {
-            Device? device = await this.devRepository
-                .GetAllAttached()
-                .FirstOrDefaultAsync(r => r.Id.ToString() == model.Id);
-
-            if (device != null)
+            if (device == null)
             {
-                device.DeviceName = model.DeviceName;
-                device.Type = model.DeviceType;
-                device.Status = model.Status;
-                await this.devRepository.DeleteAsync(device.Id);
+                return false;
             }
+
+            bool hasActiveDevices = device.DevicesRooms.Any(dr => !dr.IsDeleted);
+            if (hasActiveDevices)
+            {
+                return false;
+            }
+            device.IsDeleted = true;
+
+            await this.devRepository.UpdateAysnc(device);
 
             return true;
         }

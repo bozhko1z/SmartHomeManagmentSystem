@@ -1,5 +1,5 @@
 ﻿@using SmartHome.Web.ViewModels.Device
-@model DeleteDeviceModel
+@model DeviceDescriptionViewModel
 
 @{
     ViewData["Title"] = "Delete Device";
@@ -14,14 +14,14 @@
         <dd class="col-sm-10">@Model.DeviceName</dd>
 
         <dt class="col-sm-2">Type</dt>
-        <dd class="col-sm-10">@Model.DeviceType</dd>
+        <dd class="col-sm-10">@Model.Type</dd>
 
         <dt class="col-sm-2">Status</dt>
         <dd class="col-sm-10">@(@Model.Status ? "On" : "Off")</dd>
     </dl>
 </div>
 
-<form asp-action="Delete" method="post">
+<form asp-action="SoftDelete" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
     <button type="submit" class="btn btn-danger">Delete</button>

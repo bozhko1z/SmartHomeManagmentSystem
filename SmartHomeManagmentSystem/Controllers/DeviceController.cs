@@ -257,21 +257,39 @@ namespace SmartHomeManagmentSystem.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> SoftDelete(string id)
         {
-            var model = await this.deviceService
-                .DeviceDeleteByIdAsync(id);
+            if(string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var deviceGuidId))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            DeviceDescriptionViewModel model = await this.deviceService.DeviceDescriptionByIdAsync(deviceGuidId);
+
+            if (model == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return View(model);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteModel(DeleteDeviceModel model)
+
+        [HttpPost, ActionName("SoftDelete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SoftDeleteConfirmed(string id)
         {
-            if (!ModelState.IsValid)
+            if (!Guid.TryParse(id, out var deviceGuiId))
             {
-                return View(model);
+                return RedirectToAction(nameof(Index));
             }
-            await this.deviceService.DeleteDeviceAsync(model);
+
+            bool isSoftDeleted = await this.deviceService.SoftDeleteDeviceAsync(deviceGuiId);
+
+            if (!isSoftDeleted)
+            {
+                TempData["Error Message"] = "Unable to delete device!";
+                return RedirectToAction(nameof(Index), new { id = id });
+            }
             return RedirectToAction(nameof(Index));
         }
     }

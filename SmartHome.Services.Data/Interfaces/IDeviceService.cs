@@ -19,8 +19,6 @@ namespace SmartHome.Services.Data.Interfaces
 
         Task<bool> EditDeviceAsync(EditDeviceViewModel model);
 
-        Task<DeleteDeviceModel> DeviceDeleteByIdAsync(Guid id);
-
-        Task<bool> DeleteDeviceAsync(DeleteDeviceModel model);
+        Task<bool> SoftDeleteDeviceAsync(Guid id);
     }
 }

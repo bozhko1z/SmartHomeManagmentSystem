@@ -12,6 +12,8 @@ namespace SmartHome.Data.Models
 
         public bool Status { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<DeviceRoom> DevicesRooms { get; set; } = new HashSet<DeviceRoom>();
 
         public virtual ICollection<UserDevice> DeviceUsers { get; set; } = new HashSet<UserDevice>();

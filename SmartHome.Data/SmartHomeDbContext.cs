@@ -36,6 +36,7 @@ namespace SmartHome.Data
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.Entity<Room>().HasQueryFilter(u => !u.IsDeleted);
+            modelBuilder.Entity<Device>().HasQueryFilter(u => !u.IsDeleted);
         }
     }
 }
