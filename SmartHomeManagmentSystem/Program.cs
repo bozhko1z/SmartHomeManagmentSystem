@@ -51,7 +51,6 @@ namespace SmartHomeManagmentSystem
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-
             WebApplication app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -64,12 +63,14 @@ namespace SmartHomeManagmentSystem
                 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
+            //if (!app.Environment.IsDevelopment())
+            //{
                 app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error/500");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseHsts();
-            }
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -4,10 +4,24 @@ namespace SmartHomeManagmentSystem.Controllers
 {
     public class CustomErrorController : BaseController
     {
-        [Route("Error/403")]
-        public IActionResult Forbidden()
+        [Route("Error/{statusCode}")]
+        public IActionResult HandleErrorCode(int statusCode)
         {
-            return View();
+            switch (statusCode)
+            {
+                case 404:
+                    return View("404");
+                case 500:
+                    return View("500");
+                default:
+                    return View("GenericError");
+            }
+        }
+
+        [Route("Error/500")]
+        public IActionResult HandleServerError()
+        {
+            return View("500");
         }
     }
 }

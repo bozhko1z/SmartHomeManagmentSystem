@@ -62,7 +62,7 @@ namespace SmartHomeManagmentSystem.Controllers
             {
                 return View(inputModel);
             }
-
+            
             //if validation fails
             var deviceTypes = new List<Types>
             {
