@@ -21,9 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHome.Web.Infrastructur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{50486DAE-24A1-4E45-AAC4-4E55378DDCF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome.Services.Data", "SmartHome.Services.Data\SmartHome.Services.Data.csproj", "{02080826-2D26-4A49-9094-952951211140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHome.Services.Data", "SmartHome.Services.Data\SmartHome.Services.Data.csproj", "{02080826-2D26-4A49-9094-952951211140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome.Services.Mapping", "SmartHome.Services.Mapping\SmartHome.Services.Mapping.csproj", "{C58AA10C-988D-4E90-B732-EFFA430DF317}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHome.Services.Mapping", "SmartHome.Services.Mapping\SmartHome.Services.Mapping.csproj", "{C58AA10C-988D-4E90-B732-EFFA430DF317}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{13D59D03-0B16-4074-864E-A710E2A47DEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHome.TestServices", "SmartHome.TestServices\SmartHome.TestServices.csproj", "{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,10 @@ Global
 		{C58AA10C-988D-4E90-B732-EFFA430DF317}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C58AA10C-988D-4E90-B732-EFFA430DF317}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C58AA10C-988D-4E90-B732-EFFA430DF317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,7 @@ Global
 		{985400F9-D716-4C8C-B84E-B04EA9C4CD16} = {E09CF459-FA1C-4DF0-8742-FA3035BABB54}
 		{02080826-2D26-4A49-9094-952951211140} = {50486DAE-24A1-4E45-AAC4-4E55378DDCF0}
 		{C58AA10C-988D-4E90-B732-EFFA430DF317} = {50486DAE-24A1-4E45-AAC4-4E55378DDCF0}
+		{4DC0FD06-3791-4E6C-8098-D3D7D0A244EB} = {13D59D03-0B16-4074-864E-A710E2A47DEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC32662E-E0C6-41FB-A0C6-88B97AEDE151}

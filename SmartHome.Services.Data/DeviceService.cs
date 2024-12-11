@@ -57,6 +57,11 @@ namespace SmartHome.Services.Data
             {
                 AutoMapperConfig.MapperInstance.Map(device, descriptionViewModel);
             }
+            else
+            {
+                return null;
+            }
+
             return descriptionViewModel;
         }
 
