@@ -40,6 +40,12 @@ namespace SmartHome.TestServices
             AutoMapperConfig.MapperInstance = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Device, AllDevicesViewModel>();
+                cfg.CreateMap<Device, DeviceDescriptionViewModel>();
+                // Add this mapping for AddDeviceInputModel to Device
+                cfg.CreateMap<AddDeviceInputModel, Device>()
+                    .ForMember(dest => dest.DeviceName, opt => opt.MapFrom(src => src.DeviceName))
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DeviceType))
+                    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
             }).CreateMapper();
         }
 
@@ -78,5 +84,106 @@ namespace SmartHome.TestServices
 
             Assert.IsNull(result);
         }
+
+        [Test]
+        public async Task DeviceDescriptionByIdAsync_ShouldReturnDeviceDescription()
+        {
+            var deviceId = Guid.NewGuid();
+            var device = new Device { Id = deviceId, DeviceName = "Test Device", Type = "Switch", Status = true };
+
+            this.deviceRepo.Setup(d => d.GetByIdAsync(deviceId)).ReturnsAsync(device);
+
+            var deviceService = new DeviceService(this.deviceRepo.Object);
+
+            var result = await deviceService.DeviceDescriptionByIdAsync(deviceId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Device", result.DeviceName);
+            Assert.AreEqual("Switch", result.Type);
+            Assert.IsTrue(result.Status);
+        }
+
+        // Test for GetAllDevicesAsync
+        [Test]
+        public async Task GetAllDevicesAsync_ShouldReturnAllDevices()
+        {
+            var devices = new List<Device>
+            {
+                new Device { Id = Guid.NewGuid(), DeviceName = "Device 1", Type = "Light", Status = true },
+                new Device { Id = Guid.NewGuid(), DeviceName = "Device 2", Type = "Switch", Status = false }
+            };
+
+            var mockDevices = devices.AsQueryable().BuildMock();
+
+            this.deviceRepo.Setup(d => d.GetAllAttached()).Returns(mockDevices);
+
+            var deviceService = new DeviceService(this.deviceRepo.Object);
+
+            var result = await deviceService.GetAllDevicesAsync();
+
+            Assert.AreEqual(2, result.Count());
+        }
+
+        [Test]
+        public async Task AddDeviceAsync_ShouldAddDeviceSuccessfully()
+        {
+            var inputModel = new AddDeviceInputModel
+            {
+                DeviceName = "New Device",
+                DeviceType = "Sensor",
+                Status = true
+            };
+
+            this.deviceRepo.Setup(d => d.AddAysnc(It.IsAny<Device>())).Returns(Task.CompletedTask);
+
+            var deviceService = new DeviceService(this.deviceRepo.Object);
+
+            await deviceService.AddDeviceAsync(inputModel);
+
+            this.deviceRepo.Verify(d => d.AddAysnc(It.IsAny<Device>()), Times.Once);
+        }
+
+        [Test]
+        public async Task SoftDeleteDeviceAsync_ShouldReturnFalseIfDeviceNotFound()
+        {
+            var deviceId = Guid.NewGuid();
+
+            // Setup an empty list to simulate no devices in the repository
+            var mockDevices = Enumerable.Empty<Device>().AsQueryable().BuildMock();
+
+            // Mock the method GetAllAttached to return the mock data
+            this.deviceRepo.Setup(d => d.GetAllAttached()).Returns(mockDevices);
+
+            var deviceService = new DeviceService(this.deviceRepo.Object);
+
+            var result = await deviceService.SoftDeleteDeviceAsync(deviceId);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task SoftDeleteDeviceAsync_ShouldReturnFalseIfHasActiveRooms()
+        {
+            var deviceId = Guid.NewGuid();
+            var device = new Device
+            {
+                Id = deviceId,
+                DeviceName = "Test Device",
+                Type = "Switch",
+                Status = false,
+                DevicesRooms = new List<DeviceRoom> { new DeviceRoom { IsDeleted = false } }
+            };
+
+            var mockDevices = new List<Device> { device }.AsQueryable().BuildMock();
+
+            this.deviceRepo.Setup(d => d.GetAllAttached()).Returns(mockDevices);
+
+            var deviceService = new DeviceService(this.deviceRepo.Object);
+
+            var result = await deviceService.SoftDeleteDeviceAsync(deviceId);
+
+            Assert.IsFalse(result);
+        }
+
     }
 }
