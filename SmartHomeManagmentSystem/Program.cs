@@ -25,7 +25,7 @@ namespace SmartHomeManagmentSystem
             // Add services to the container.
             builder.Services.AddDbContext<SmartHomeDbContext>(options =>
             {
-                options.UseSqlServer(connectionString); 
+                options.UseSqlServer(connectionString);
             });
 
             //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SmartHomeDbContext>();
@@ -60,7 +60,7 @@ namespace SmartHomeManagmentSystem
                 DbSeeder.AssignAdminRole(services);
             }
 
-                AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Configure the HTTP request pipeline.
             //if (!app.Environment.IsDevelopment())
