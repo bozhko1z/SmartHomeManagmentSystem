@@ -62,7 +62,7 @@ namespace SmartHome.Services.Data
                     .Where(r => r.IsDeleted == false)
                     .Select(r => new RoomDeviceViewModel()
                     {
-                        Name = r.Room.RoomName
+                        Name = r.Room?.RoomName ?? "Unknown"
                     })
                     .ToArray()
                 };
